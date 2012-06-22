@@ -1,0 +1,21 @@
+akismet == 0.2.0
+Django >= 1.4, < 1.5
+django-haystack == 1.1.0
+django-push == 0.4
+django-registration == 0.7
+django-secure == 0.1
+docutils
+FeedParser >= 5.0, <= 5.1
+Jinja2 >= 2.4, < 2.5
+psycopg2
+python-memcached >= 1.45, < 2.0
+Sphinx
+South >= 0.7, < 0.8
+raven==1.9.4
+
+# django-contact-form doens't have a release compatible with Django 1.2.
+#http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
+
+# xapian-haystack has a bug in 1.1.5beta fixed in trunk. So this
+# can go back to a packaged release as soon as there's a newer release.
+#-e git://github.com/notanumber/xapian-haystack.git@dc11c14542c0137831e5#egg=xapian-haystack
