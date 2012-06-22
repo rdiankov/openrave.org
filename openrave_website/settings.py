@@ -153,7 +153,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
-    "openrave_website.context_processors.recent_release",
+    "openrave_website.docs.context_processors.recent_release",
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
     ]
@@ -201,7 +201,7 @@ ACCOUNT_ACTIVATION_DAYS = 3
 OPENRAVE_DOCUMENT_ROOT_PATH = os.path.join(ROOT_PATH,'docs')
 
 # Haystack settings
-HAYSTACK_SITECONF = 'openrave_website.search_sites'
+HAYSTACK_SITECONF = 'openrave_website.docs.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
 HAYSTACK_WHOOSH_PATH = os.path.join(OPENRAVE_DOCUMENT_ROOT_PATH,'openravedocs.index')
 

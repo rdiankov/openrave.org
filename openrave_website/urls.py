@@ -12,37 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-#from django.conf.urls.defaults import *
-from haystack.views import search_view_factory
-from . import views
-
-if settings.IPYTHON_DEBUG:
-   from IPython.Shell import IPShellEmbed
-    #ipshell = IPShellEmbed(argv='',banner = 'Dropping into IPython',exit_msg = 'Leaving Interpreter.')
-    #ipshell(local_ns=locals())
 
 # enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', views.index),
     # Uncomment the next line to enable the admin:
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^search/$', search_view_factory(view_class=views.DocSearchView), name = 'document-search'),
-    url(r'^(?P<lang>[a-z-]+)/$', views.language),
-    url(r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/$', views.document, {'url': ''}, name = 'document-index'),
-    url(r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_objects/$', views.objects_inventory, name = 'objects-inv'),
-    url(r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_images/(?P<path>.*)$', views.SphinxStatic('_images')),
-    url(r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_source/(?P<path>.*)$', views.SphinxStatic('_sources')),
-    url(r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_downloads/(?P<path>.*)$', views.SphinxStatic('_downloads')),
-    url(r'^(.*)/index/$', views.redirect_index),
-    url(r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<url>[\w./-]*)/$', views.document, name = 'document-detail'),
-    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/openrave_icon_32.png'}),
+    url(r'^', include('openrave_website.docs.urls')),
 )
-
-# if settings.DEBUG:
-#     urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root': settings.MEDIA_ROOT}))
