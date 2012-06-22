@@ -11,11 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+IPYTHON_DEBUG = False
 DEBUG = False
-PREPEND_WWW = False
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-ADMIN_MEDIA_PREFIX = "http://www.openrave.org/m/admin/"
 
 EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = SECRETS.get('email')
 EMAIL_HOST='smtp.gmail.com'
@@ -58,7 +56,7 @@ LOGGING["handlers"]["logfile"] = {
     "backupCount": 5,
 }
 LOGGING["loggers"]["django.request"]["handlers"].append("logfile")
-LOGGING["loggers"]["django_website"]["handlers"] = ["logfile"]
+LOGGING["loggers"]["openrave_website"]["handlers"] = ["logfile"]
 
 # necessary?
 #HAYSTACK_SEARCH_ENGINE = 'xapian'

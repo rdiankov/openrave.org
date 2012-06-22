@@ -45,11 +45,10 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
         'TIME_ZONE': 'UTC',
-        }
     }
 }
 
-# djangoproject.com has a router for Trac (django_website.trac.db_router.TracRouter) that can create django models from trac tables
+# djangoproject.com has a router for Trac (openrave_website.trac.db_router.TracRouter) that can create django models from trac tables
 DATABASE_ROUTERS = []
 
 # If you set this to False, Django will make some optimizations so as not
@@ -73,14 +72,37 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(ROOT_PATH, 'templates'),
 )
-MEDIA_ROOT = ''
 
+
+IPYTHON_DEBUG = True
 DEBUG = True
-PREPEND_WWW = False
 CACHE_BACKEND = "dummy:///"
-MEDIA_URL = ''
-ADMIN_MEDIA_PREFIX = '/admin_media/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MEDIA_ROOT = ''
+MEDIA_URL = ''
+
+STATIC_ROOT = ''
+
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/static/'
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
 
 SITE_ID = 1
 ROOT_URLCONF = 'openrave_website.urls'
@@ -162,7 +184,7 @@ LOGGING = {
             "level": "ERROR",
             "propagate": False,
         },
-        "django_website": {
+        "openrave_website": {
             "handlers": ["console"],
             "level": "DEBUG",
         }
@@ -185,7 +207,7 @@ HAYSTACK_WHOOSH_PATH = os.path.join(OPENRAVE_DOCUMENT_ROOT_PATH,'openravedocs.in
 
 # PubSubHubbub settings
 #PUSH_HUB = 'https://superfeedr.com/hubbub'
-#PUSH_CREDENTIALS = 'django_website.aggregator.utils.push_credentials'
+#PUSH_CREDENTIALS = 'openrave_website.aggregator.utils.push_credentials'
 #PUSH_SSL_CALLBACK = False
 
 # If django-debug-toolbar is installed enable it.

@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Rosen Diankov <rosen.diankov@gmail.com>
+# Copyright (C) 2012 OpenRAVE, djangoproject.com
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,14 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from django.contrib import admin
+from .models import DocumentRelease
 
-import os
-import sys
-
-if __name__ == "__main__":
-    #os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'openrave_website.settings')
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'openrave_website.settings'
-
-    from django.core.management import execute_from_command_line
-
-    execute_from_command_line(sys.argv)
+admin.site.register(DocumentRelease,
+    list_display = ['version', 'lang', 'scm_url', 'is_default'],
+    list_editable = ['is_default'],
+)
