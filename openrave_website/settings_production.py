@@ -13,6 +13,7 @@
 # limitations under the License.
 IPYTHON_DEBUG = False
 DEBUG = False
+TEMPLATE_DEBUG = False
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 
 EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = SECRETS.get('email')

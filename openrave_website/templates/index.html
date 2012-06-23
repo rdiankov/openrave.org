@@ -1,0 +1,47 @@
+{% load url from future %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE|default:"en-us" }}" xml:lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+{% load i18n %}
+<head>
+  <title>{% trans "Welcome to OpenRAVE" %}</title>
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/openrave_style.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tooltip_style.css">
+  <link type="text/css" href="{{ STATIC_URL }}css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery-1.7.1.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery.tools.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}jquery-ui-1.8.16.custom.min.js"></script>
+  {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+</head>
+
+<body class="">
+
+<!-- Container -->
+<div id="container">
+
+    <!-- Header -->
+    <div id="header">
+      <div id="branding">
+        <table border="0" width="100%" ><tr>
+            <td align="left" width="150">
+              <img src="{{ STATIC_URL }}img/openrave_banner.png" width="400"/></td>
+        </tr></table>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div id="content" class="{% block coltype %}colM{% endblock %}">
+        {% block pretitle %}{% endblock %}
+        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+        {% block content %}
+        {% block object-tools %}{% endblock %}
+        {{ content }}
+        {% endblock %}
+        {% block sidebar %}{% endblock %}
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    {% block footer %}<div id="footer"></div>{% endblock %}
+</div>
+
+</body>
+</html>

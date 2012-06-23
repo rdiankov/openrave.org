@@ -14,10 +14,7 @@
 
 # Settings for www.openrave.org
 
-import os
-import json
-import platform
-
+import os, json
 ROOT_PATH = os.path.dirname(__file__)
 
 try:
@@ -66,23 +63,17 @@ LOCALE_PATHS=(
     os.path.join(ROOT_PATH,'..','locale'),
     )
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(ROOT_PATH, 'templates'),
-)
-
-
 IPYTHON_DEBUG = True
 DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 CACHE_BACKEND = "dummy:///"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = "noreply@openrave.org"
 
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 
-STATIC_ROOT = ''
+STATIC_ROOT = 'static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -93,6 +84,8 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(ROOT_PATH,'static'),
+    os.path.join(ROOT_PATH,'static'+OPENRAVEORG_ENV),
 )
 
 # List of finder classes that know how to find static files in
@@ -109,7 +102,7 @@ ROOT_URLCONF = 'openrave_website.urls'
 INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.auth',
-    'django.contrib.admin',
+    'django.contrib.staticfiles',
     'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.flatpages',
@@ -123,7 +116,8 @@ INSTALLED_APPS = [
     'registration',
     'south',
     'djangosecure',
-    'haystack'
+    'haystack',
+    #'django.contrib.admin',
 ]
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
@@ -144,21 +138,20 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 ]
 
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(ROOT_PATH, 'templates'),
+)
+
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
-TEMPLATE_CONTEXT_PROCESSORS = [
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "openrave_website.docs.context_processors.recent_release",
-    "django.contrib.messages.context_processors.messages",
-    "django.core.context_processors.request",
-    ]
 
-DEFAULT_FROM_EMAIL = "noreply@openrave.org"
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+TEMPLATE_CONTEXT_PROCESSORS += ('openrave_website.docs.context_processors.recent_release',)
 
 LOGGING = {
     "version": 1,

@@ -13,7 +13,8 @@
 # limitations under the License.
 from django.conf import settings
 from django.core.cache import cache
-from openrave_website.models import DocumentRelease
+from django.db.utils import DatabaseError
+from .models import DocumentRelease
 
 if settings.IPYTHON_DEBUG:
    from IPython.Shell import IPShellEmbed
@@ -25,6 +26,6 @@ def recent_release(request):
             recent_release = DocumentRelease.objects.default().version
             cache.set(DocumentRelease.DEFAULT_CACHE_KEY, recent_release, settings.CACHE_MIDDLEWARE_SECONDS)
         return {'RECENT_RELEASE': recent_release}
-    except DocumentRelease.DoesNotExist:
+    except (DocumentRelease.DoesNotExist,DatabaseError):
         return {}
     
