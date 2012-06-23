@@ -190,7 +190,7 @@ ACCOUNT_ACTIVATION_DAYS = 3
 #AKISMET_API_KEY = "?"
 
 # setting for documentation root path
-OPENRAVE_DOCUMENT_ROOT_PATH = os.path.join(ROOT_PATH,'docs')
+OPENRAVE_DOCUMENT_ROOT_PATH = os.path.join(ROOT_PATH,'..','docdata')
 
 # Haystack settings
 HAYSTACK_SITECONF = 'openrave_website.docs.search_sites'

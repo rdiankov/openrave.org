@@ -55,14 +55,13 @@ def indexview(request,name):
 
     return render_to_response(name, RequestContext(request,htmlvars))
 
-
 urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^docs', include('openrave_website.docs.urls')),
-    url(r'^$', 'django.views.generic.simple.redirect_to', {'url':'/docs/'}),
+    url(r'^$', indexview, {'name':'index.html'}),
     url(r'^news/$', indexview, {'name':'news.html'}),
     url(r'^dev/$', indexview, {'name':'dev.html'}),
-    url(r'^(?P<name>(\w|\.)+)$', indexview),
+    url(r'^(?P<name>[\w\.]+)$', indexview),
+    url(r'^docs', include('openrave_website.docs.urls')),
     url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/openrave_icon_32.png'}),
 )

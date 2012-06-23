@@ -575,7 +575,7 @@ ul.keywordmatches li.goodmatch a {
 #news #nav-news a,
 #documentation #nav-documentation a,
 #development #nav-development a,
-#code #nav-code a {
+#wiki #nav-wiki a {
     color:white;
     background:#d5ffd5 url(../img/topnavigation.png) bottom repeat-x;
 }

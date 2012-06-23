@@ -65,7 +65,7 @@ LOGGING["loggers"]["openrave_website"]["handlers"] = ["logfile"]
     
 #PUSH_SSL_CALLBACK = True
 
-OPENRAVE_DOCUMENT_ROOT_PATH = '/var/openrave/docs/'
+OPENRAVE_DOCUMENT_ROOT_PATH = '/var/openrave/docdata/'
 MEDIA_ROOT = '/var/openrave/media/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/var/openrave/static/'

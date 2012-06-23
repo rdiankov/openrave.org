@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-23 01:20+0000\n"
+"POT-Creation-Date: 2012-06-23 05:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,82 @@ msgstr ""
 msgid "Latest Stable"
 msgstr "最新安定版"
 
-#: openrave_website/templates/index.html:5
+#: openrave_website/templates/base.html:30
+#: openrave_website/templates/index.html:4
+msgid "Home"
+msgstr "ホーム"
+
+#: openrave_website/templates/base.html:31
+#: openrave_website/templates/news.html:4
+msgid "News"
+msgstr "ニュース"
+
+#: openrave_website/templates/base.html:32
+#: openrave_website/templates/base_docs.html:5
+#: openrave_website/templates/base_docs.html:7
+#: openrave_website/templates/doc.html:3 openrave_website/templates/doc.html:6
+msgid "Documentation"
+msgstr "ドキュメント"
+
+#: openrave_website/templates/base.html:33
+#: openrave_website/templates/dev.html:5
+msgid "Development"
+msgstr "開発"
+
+#: openrave_website/templates/base.html:34
+msgid "Wiki"
+msgstr "ウィキ"
+
+#: openrave_website/templates/doc.html:22
+msgid ""
+"This document is for OpenRAVE's latest_stable version, which can be "
+"significantly different from the last official release."
+msgstr ""
+"OpenRAVEの最新安定版のドキュメントです。公開版と異なっている可能性があるので"
+"ご注意ください。"
+
+#: openrave_website/templates/doc.html:22
+msgid "Click on the links on the left to see other versions."
+msgstr "左のリンクにクリックすれば他のバージョンのドキュメントをご覧出来ます。"
+
+#: openrave_website/templates/index.html:7
 msgid "Welcome to OpenRAVE"
 msgstr "OpenRAVEへようこそ"
+
+#: openrave_website/templates/index.html:9
+msgid "Latest Official Release:"
+msgstr ""
+
+#: openrave_website/templates/index.html:11
+msgid ""
+"OpenRAVE provides an environment for testing, developing, and deploying "
+"motion planning algorithms in real-world robotics applications. The main "
+"focus is on simulation and analysis of kinematic and geometric information "
+"related to motion planning. OpenRAVE's stand-alone nature allows is to be "
+"easily integrated into existing robotics systems."
+msgstr ""
+"OpenRAVEは現実世界の自律型ロボットアプリケーションをターゲットとし、そのテス"
+"トと開発のためのモーションプランニングと高度な知的アルゴリズムを備えた開発環"
+"境を提供します。OpenRAVEはシミュレーション、可視化、動作計画、スクリプトと制"
+"御機能等の統合環境を備えています。そのプラグインアーキテクチャを使い、ユー"
+"ザーは簡単にコントローラの変更や機能の拡張をすることができます。使用するプラ"
+"グイン、動作計画アルゴリズム、ロボットの自律制御、またはセンシングを考慮した"
+"動作は個々のモジュールになっており、実行時に動的に呼び出されます。これによっ"
+"て開発者は多くのモジュールが１つの大きな塊となった巨大なコードと格闘すること"
+"から解放されます。さらにOpenRAVEのユーザーは、ロボットの運動学と動力学、幾何"
+"学的干渉、環境変化、ロボット制御などの詳細が分からなくても知的動作とスクリプ"
+"トの開発に集中することができます。またOpenRAVEは、制御ドライバ、通信規格、認"
+"識システム等に焦点をあてた世の中に存在する他のロボットシステムとは異なり、幾"
+"何学と動力学のシミュレーションと解析に焦点をおいているため、それらのシステム"
+"とも容易に共存することが可能です。"
+
+#: openrave_website/templates/index.html:12
+msgid ""
+"It provides many command line tools to work with robots and planners, and "
+"the run-time core is small enough to be used inside controllers and bigger "
+"frameworks. An important target application is industrial robotics "
+"automation."
+msgstr ""
+"多くのコマンドラインツールも提供しているし、コアの部分が小さいので、ロボット"
+"コントローラと他のフレームワークに導入しやすいです。一つの目標は産業用ロボッ"
+"トの分野で使用されることです。"
