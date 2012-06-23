@@ -8,6 +8,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.utils import simplejson
+from django.utils.translation import get_language_from_request
 
 import haystack.views
 
@@ -17,12 +18,10 @@ from .utils import get_doc_root_or_404, get_doc_path_or_404
 
 def index(request):
     return redirect(DocumentRelease.objects.default())
-    
-def language(request, lang):
-    return redirect(DocumentRelease.objects.default())
 
-def document(request, lang, version, url):
-    docroot = get_doc_root_or_404(lang, version)
+def document(request, version, url):
+    LANG = get_language_from_request(request)
+    docroot = get_doc_root_or_404(LANG, version)
     doc_path = get_doc_path_or_404(docroot, url)
     
     template_names = [
@@ -32,11 +31,11 @@ def document(request, lang, version, url):
     return render_to_response(template_names, RequestContext(request, {
         'doc': simplejson.load(open(doc_path, 'rb')),
         'env': simplejson.load(open(docroot.child('globalcontext.json'), 'rb')),
-        'lang': lang,
+        'lang': LANG,
         'version': version,
         'docurl': url,
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
-        'home': urlresolvers.reverse('document-index', kwargs={'lang':lang, 'version':version}),
+        'home': urlresolvers.reverse('document-index', kwargs={'lang':LANG, 'version':version}),
         'redirect_from': request.GET.get('from', None),
     }))
 
@@ -47,19 +46,13 @@ class SphinxStatic(object):
     def __init__(self, subpath):
         self.subpath = subpath
 
-    def __call__(self, request, lang, version, path):
-        return django.views.static.serve(
-            request, 
-            document_root = get_doc_root_or_404(lang, version).child(self.subpath),
-            path = path,
-        )
+    def __call__(self, request, version, path):
+        LANG = get_language_from_request(request)
+        return django.views.static.serve(request,  document_root = get_doc_root_or_404(LANG, version).child(self.subpath), path = path)
 
-def objects_inventory(request, lang, version):
-    response = django.views.static.serve(
-        request, 
-        document_root = get_doc_root_or_404(lang, version),
-        path = "objects.inv",
-    )
+def objects_inventory(request, version):
+    LANG = get_language_from_request(request)
+    response = django.views.static.serve(request, document_root = get_doc_root_or_404(LANG, version), path = "objects.inv")
     response['Content-Type'] = "text/plain"
     return response
 
@@ -69,18 +62,10 @@ def redirect_index(request, *args, **kwargs):
 
 class DocSearchView(haystack.views.SearchView):
     def __init__(self, **kwargs):
-        kwargs.update({
-            'template': 'docs/search.html',
-            'form_class': DocSearchForm,
-            'load_all': False,
-        })
+        kwargs.update({'template': 'docs/search.html', 'form_class': DocSearchForm, 'load_all': False })
         super(DocSearchView, self).__init__(**kwargs)
     
     def extra_context(self):
         # Constuct a context that matches the rest of the doc page views.
         default_release = DocumentRelease.objects.default()
-        return {
-            'lang': default_release.lang,
-            'version': default_release.version,
-            'release': default_release,
-        }
+        return { 'lang': default_release.lang, 'version': default_release.version, 'release': default_release }

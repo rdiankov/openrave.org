@@ -1,0 +1,4 @@
+# Requirements to manage the site locally and run the fabfile.
+
+Fabric
+whoosh

@@ -2,6 +2,9 @@ Using system similar to `djangoproject.com <https://github.com/django/djangoproj
 
 To run locally, do the usual::
 
+Install
+=======
+
 1. Create a virtualenv
 2. Install dependencies::
 
@@ -40,9 +43,36 @@ Finally::
     python manage.py runserver
 
 Creating PostgreSQL Database
-----------------------------
+============================
 
 .. code-block:: bash
 
   sudo -u postgres psql --command "CREATE ROLE openrave PASSWORD 'testpass' SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;"
   createdb --host localhost --username openrave --encoding UTF-8 openrave_website
+
+Editing
+=======
+
+All HTML templates are in **openrave_website/templates**. `Tutorial on HTML + Django syntax template language <https://docs.djangoproject.com/en/1.4/topics/templates/>`_
+
+Only write English in the HTML files and only inside these translation blocks:
+
+- `trans <https://docs.djangoproject.com/en/1.4/topics/i18n/translation/#std:templatetag-trans>`_
+
+- `blocktrans <https://docs.djangoproject.com/en/1.4/topics/i18n/translation/#blocktrans-template-tag>`_  
+
+Videos and image filenames should also be written within the translation blocks so that we can substitute them with the language equivalent.
+
+Translating to Japanese
++++++++++++++++++++++++
+
+When English templates are done, execute::
+
+  django-admin.py makemessages --locale=ja_JP
+
+Open **locale/ja_JP/LC_MESSAGES/django.po** and edit the translations. When done execute::
+
+  django-admin.py compilemessages --locale=ja_JP
+
+Restart the mujinwww server and the new translation should be visible!
+

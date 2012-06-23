@@ -19,6 +19,11 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import get_language_from_request
 
+if settings.IPYTHON_DEBUG:
+    from IPython.Shell import IPShellEmbed
+    #ipshell = IPShellEmbed(argv='',banner = 'MUJIN Controller Dropping into IPython',exit_msg = 'Leaving Interpreter.')
+    #ipshell(local_ns=locals())
+
 # enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
@@ -54,6 +59,10 @@ def indexview(request,name):
 urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     #url(r'^admin/', include(admin.site.urls)),
-#    url(r'^docs', include('openrave_website.docs.urls')),
-    url(r'^(?P<name>(\w/)*)$', indexview),
+    url(r'^docs', include('openrave_website.docs.urls')),
+    url(r'^$', 'django.views.generic.simple.redirect_to', {'url':'/docs/'}),
+    url(r'^news/$', indexview, {'name':'news.html'}),
+    url(r'^dev/$', indexview, {'name':'dev.html'}),
+    url(r'^(?P<name>(\w|\.)+)$', indexview),
+    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/openrave_icon_32.png'}),
 )

@@ -28,7 +28,7 @@ SECRET_KEY = str(SECRETS['secret_key'])
 # SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
 SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
 
-ADMINS = ( ('Rosen Diankov', 'rosen.diankov@gmail.com'), )
+ADMINS = ( ('OpenRAVE Development', 'openrave.testing@gmail.com'), ('Rosen Diankov', 'rosen.diankov@gmail.com') )
 MANAGERS = ADMINS
 FEED_APPROVERS_GROUP_NAME = "feed-approver"
 TIME_ZONE = 'UTC'
@@ -59,9 +59,7 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-LOCALE_PATHS=(
-    os.path.join(ROOT_PATH,'..','locale'),
-    )
+LOCALE_PATHS=( os.path.join(ROOT_PATH,'..','locale'), )
 
 IPYTHON_DEBUG = True
 DEBUG = True
@@ -132,6 +130,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
