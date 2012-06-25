@@ -29,12 +29,12 @@ class DocumentRelease(models.Model):
     SVN = 'svn'
     GIT = 'git'
     SCM_CHOICES = ( (SVN, 'SVN'), (GIT, 'git') )
-
+    
     lang = models.CharField(max_length=2, choices=settings.LANGUAGES, default='en')
     version = models.CharField(max_length=20)
     scm = models.CharField(max_length=10, choices=SCM_CHOICES)
     scm_url = models.CharField(max_length=200)
-    docs_subdir = models.CharField(max_length=200, blank=True)
+    #docs_subdir = models.CharField(max_length=200, blank=True)
     is_default = models.BooleanField()
 
     objects = DocumentReleaseManager()
@@ -44,7 +44,7 @@ class DocumentRelease(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('document-index', [], {'version': self.version, 'lang': self.lang})
+        return ('document-index', [], {'version': self.version})
 
     def save(self, *args, **kwargs):
         # There can be only one. Default, that is.
@@ -65,7 +65,7 @@ class Document(models.Model):
     An individual document. Used mainly as a hook point for Haystack.
     """
     release = models.ForeignKey(DocumentRelease, related_name='documents')
-    path = models.CharField(max_length=500)
+    path = models.CharField(max_length=500, help_text=_('The relative path and filename of the document with respect to the directory already encoding the version/release information'))
     title = models.CharField(max_length=500)
 
     def __unicode__(self):

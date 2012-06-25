@@ -56,62 +56,38 @@ class Command(NoArgsCommand):
             if verbosity >= 1:
                 print "Updating %s..." % release
 
-            destdir = Path(settings.DOCS_BUILD_ROOT).child(release.lang, release.version)
-            if not destdir.exists():
-                destdir.mkdir(parents=True)
+            zipfilename = os.path.join(settings.OPENRAVE_DOCUMENT_ROOT_PATH,'openravejson-%s.zip'%release.version)
+            if not os.path.exists(zipfilename):
+                print 'failed to find zipfile',zipfilename
+                continue
+            
+            zipfiledir = os.path.splitext(zipfilename)[0]
+            docsdir = os.path.join(zipfiledir,release.lang,'sphinxjson')
 
-            #
-            # Update the release from SCM.
-            #
+            douncompress = True
+            if os.path.exists(zipfiledir) and os.path.exists(docsdir):
+                # check if timestamps of zipfile and dir match
+                douncompress = os.stat(zipfiledir).st_mtime < os.stat(zipfilename).st_mtime
+            
+            if douncompress:
+                print 'uncompressing',zipfilename
+                try:
+                    zf = zipfile.ZipFile(zipfilename, 'r')
+                except IOError,e:
+                    print e
+                    continue
 
-            # Make an SCM checkout/update into the destination directory.
-            # Do this dynamically in case we add other SCM later.
-            getattr(self, 'update_%s' % release.scm)(release.scm_url, destdir)
+                for files in zf.namelist():
+                    zf.extract(files, settings.OPENRAVE_DOCUMENT_ROOT_PATH)
+                zf.close()
+                # have to touch zipfiledir incase zip file did not overwrite its timestamp
+                os.utime(zipfiledir, None)
 
-            #
-            # Use Sphinx to build the release docs into JSON and HTML documents.
-            #
-            if release.docs_subdir:
-                source_dir = destdir.child(*release.docs_subdir.split('/'))
-            else:
-                source_dir = destdir
-
-            for builder in ('json', 'html'):
-                # Make the directory for the built files - sphinx-build doesn't
-                # do it for us, apparently.
-                build_dir = destdir.child('_build', builder)
-                if not build_dir.exists():
-                    build_dir.mkdir(parents=True)
-
-                # "Shell out" (not exactly, but basically) to sphinx-build.
-                if verbosity >= 2:
-                    print "  building %s (%s -> %s)" % (builder, source_dir, build_dir)
-                sphinx.cmdline.main(['sphinx-build',
-                    '-b', builder,
-                    '-q',              # Be vewy qwiet
-                    source_dir,        # Source file directory
-                    build_dir,         # Destination directory
-                ])
-
-            #
-            # Create a zip file of the HTML build for offline reading.
-            # This gets moved into MEDIA_ROOT for downloading.
-            #
-            html_build_dir = destdir.child('_build', 'html')
-            zipfile_name = 'openrave-docs-%s-%s.zip' % (release.version, release.lang)
-            zipfile_path = Path(settings.MEDIA_ROOT).child('docs', zipfile_name)
-            if not zipfile_path.parent.exists():
-                zipfile_path.parent.mkdir(parents=True)
-            if verbosity >= 2:
-                print "  build zip (into %s)" % zipfile_path
-
-            def zipfile_inclusion_filter(f):
-                return f.isfile() and '.doctrees' not in f.components()
-
-            with closing(zipfile.ZipFile(zipfile_path, 'w')) as zf:
-                for f in html_build_dir.walk(filter=zipfile_inclusion_filter):
-                    zf.write(f, html_build_dir.rel_path_to(f))
-
+            # check if the language exists
+            if not os.path.exists(docsdir):
+                print 'language dir does not exist',docsdir
+                continue
+            
             #
             # Rebuild the imported document list and search index.
             #
@@ -119,7 +95,7 @@ class Command(NoArgsCommand):
                 continue
 
             if verbosity >= 2:
-                print "  reindexing..."
+                print "  reindexing...",release.version
 
             # Build a dict of {path_fragment: document_object}. We'll pop values
             # out of this dict as we go which'll make sure we know which
@@ -134,35 +110,29 @@ class Command(NoArgsCommand):
             # We have to be a bit careful to reverse-engineer the correct
             # relative path component, especially for "index" documents,
             # otherwise the search results will be incorrect.
-            json_build_dir = destdir.child('_build', 'json')
-            for built_doc in json_build_dir.walk():
-                if built_doc.isfile() and built_doc.ext == '.fjson':
-
-                    # Convert the built_doc path which is now an absolute
-                    # path (i.e. "/home/docs/en/1.2/_build/ref/models.json")
-                    # into a path component (i.e. "ref/models").
-                    path = json_build_dir.rel_path_to(built_doc)
-                    if path.stem == 'index':
-                        path = path.parent
-                    path = str(path.parent.child(path.stem))
-
-                    # Read out the content and create a new Document object for
-                    # it. We'll strip the HTML tags here (for want of a better
-                    # place to do it).
-                    with open(built_doc) as fp:
-                        json_doc = json.load(fp)
-                        try:
-                            json_doc['body']  # Just to make sure it exists.
-                            title = unescape_entities(strip_tags(json_doc['title']))
-                        except KeyError, ex:
-                            if verbosity >= 2:
-                                print "Skipping: %s (no %s)" % (path, ex.args[0])
-                            continue
-
-                    doc = documents.pop(path, Document(path=path, release=release))
-                    doc.title = title
-                    doc.save()
-                    haystack.site.update_object(doc)
+            for dirpath, dirnames, filenames in os.walk(docsdir):
+                for filename in filenames:
+                    basename,ext = os.path.splitext(filename)
+                    if ext == '.fjson':
+                        # Convert into a relative path for inclusion into the model                        
+                        if basename == 'index':
+                            path = os.path.normpath(os.path.relpath(dirpath,docsdir))
+                        else:
+                            path = os.path.normpath(os.path.relpath(os.path.join(dirpath,basename),docsdir))
+                        with open(os.path.join(dirpath,filename)) as fp:
+                            json_doc = json.load(fp)
+                            try:
+                                json_doc['body']  # Just to make sure it exists.
+                                title = unescape_entities(strip_tags(json_doc['title']))
+                            except KeyError, ex:
+                                if verbosity >= 2:
+                                    print "Skipping: %s (no %s)" % (path, ex.args[0])
+                                continue
+                            
+                        doc = documents.pop(path, Document(path=path, release=release))
+                        doc.title = title
+                        doc.save()
+                        haystack.site.update_object(doc)
 
             # Clean up any remaining documents.
             for doc in documents.values():
@@ -171,21 +141,21 @@ class Command(NoArgsCommand):
                 haystack.site.remove_object(doc)
                 doc.delete()
 
-    def update_svn(self, url, destdir):
-        subprocess.call(['svn', 'checkout', '-q', url, destdir])
-
-    def update_git(self, url, destdir):
-        if '@' in url:
-            repo, branch = url.rsplit('@', 1)
-        else:
-            repo, branch = url, 'master'
-        if destdir.child('.git').exists():
-            try:
-                cwd = os.getcwdu()
-                os.chdir(destdir)
-                subprocess.call(['git', 'reset', '--hard', 'HEAD'])
-                subprocess.call(['git', 'pull'])
-            finally:
-                os.chdir(cwd)
-        else:
-            subprocess.call(['git', 'clone', '-q', '--branch', branch, repo, destdir])
+#     def update_svn(self, url, destdir):
+#         subprocess.call(['svn', 'checkout', '-q', url, destdir])
+# 
+#     def update_git(self, url, destdir):
+#         if '@' in url:
+#             repo, branch = url.rsplit('@', 1)
+#         else:
+#             repo, branch = url, 'master'
+#         if destdir.child('.git').exists():
+#             try:
+#                 cwd = os.getcwdu()
+#                 os.chdir(destdir)
+#                 subprocess.call(['git', 'reset', '--hard', 'HEAD'])
+#                 subprocess.call(['git', 'pull'])
+#             finally:
+#                 os.chdir(cwd)
+#         else:
+#             subprocess.call(['git', 'clone', '-q', '--branch', branch, repo, destdir])

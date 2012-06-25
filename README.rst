@@ -21,21 +21,23 @@ Install
     { "secret_key": "xyz",
       "superfeedr_creds": ["any@email.com", "some_string"] }
 
-5. Set up DB::
+5. Initial DB Setup::
+
+    ./manage.py syncdb
+    ./manage.py convert_to_south docs
+
+Future DB Update::
 
     ./manage.py syncdb
     ./manage.py migrate
 
-   and::
+6. Add new document::
 
-    ./manage.py syncdb --docs
+  DJANGO_SETTINGS_MODULE=openrave_website.settings python -c "from openrave_website.docs import models; models.DocumentRelease.objects.create(lang='en',version='0.7.0', scm=models.DocumentRelease.SVN, scm_url='https://openrave.svn.sourceforge.net/svnroot/openrave/tags/0.7.0', is_default=True);"
 
-   if you want to run docs site.
+Re-index the documents::
 
-6. For docs::
-
-    ./manage.py loaddata doc_releases.json --docs
-    ./manage.py update_docs --docs
+  ./manage.py update_docs
 
 
 Finally::
@@ -64,7 +66,7 @@ Only write English in the HTML files and only inside these translation blocks:
 Videos and image filenames should also be written within the translation blocks so that we can substitute them with the language equivalent.
 
 Translating to Japanese
-+++++++++++++++++++++++
+=======================
 
 When English templates are done, execute::
 

@@ -16,7 +16,7 @@ from django.conf import settings
 from django.http import Http404
 
 def get_doc_root(version,lang):
-    return os.path.join(settings.OPENRAVE_DOCUMENT_ROOT_PATH, version, lang, "json")
+    return os.path.join(settings.OPENRAVE_DOCUMENT_ROOT_PATH, 'openravejson-%s'%version, lang, "sphinxjson")
     
 def get_doc_root_or_404(version,lang):
     docroot = get_doc_root(version,lang)
@@ -27,13 +27,13 @@ def get_doc_root_or_404(version,lang):
 def get_doc_path(docroot, subpath):
     # First look for <bits>/index.fpickle, then for <bits>.fpickle
     bits = subpath.strip('/').split('/') + ['index.fjson']
-    doc = os.path.join(*bits)
-    if doc.exists():
+    doc = os.path.join(docroot,*bits)
+    if os.path.exists(doc):
         return doc
 
     bits = bits[:-2] + ['%s.fjson' % bits[-2]]
-    doc = os.path.join(*bits)
-    if doc.exists():
+    doc = os.path.join(docroot,*bits)
+    if os.path.exists(doc):
         return doc
         
     return None

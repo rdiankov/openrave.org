@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import datetime
-
+import os
 import django.views.static
 from django.core import urlresolvers
 from django.http import Http404
@@ -32,21 +32,21 @@ def index(request):
 
 def document(request, version, url):
     LANG = get_language_from_request(request)
-    docroot = get_doc_root_or_404(LANG, version)
+    docroot = get_doc_root_or_404(version, LANG)
     doc_path = get_doc_path_or_404(docroot, url)
     
     template_names = [
-        'docs/%s.html' % docroot.rel_path_to(doc_path).replace(doc_path.ext, ''),
-        'docs/doc.html',
-    ]    
+        'docs/%s.html' % os.path.relpath(os.path.splitext(doc_path)[0],docroot),
+        'doc.html',
+    ]
     return render_to_response(template_names, RequestContext(request, {
         'doc': simplejson.load(open(doc_path, 'rb')),
-        'env': simplejson.load(open(docroot.child('globalcontext.json'), 'rb')),
+        'env': simplejson.load(open(os.path.join(docroot, 'globalcontext.json'), 'rb')),
         'lang': LANG,
         'version': version,
         'docurl': url,
-        'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
-        'home': urlresolvers.reverse('document-index', kwargs={'lang':LANG, 'version':version}),
+        'update_date': datetime.datetime.fromtimestamp(os.stat(os.path.join(docroot,'last_build')).st_mtime),
+        'home': urlresolvers.reverse('document-index', kwargs={'version':version}),
         'redirect_from': request.GET.get('from', None),
     }))
 
@@ -59,11 +59,11 @@ class SphinxStatic(object):
 
     def __call__(self, request, version, path):
         LANG = get_language_from_request(request)
-        return django.views.static.serve(request,  document_root = get_doc_root_or_404(LANG, version).child(self.subpath), path = path)
+        return django.views.static.serve(request,  document_root = os.path.join(get_doc_root_or_404(version, LANG), self.subpath), path = path)
 
 def objects_inventory(request, version):
     LANG = get_language_from_request(request)
-    response = django.views.static.serve(request, document_root = get_doc_root_or_404(LANG, version), path = "objects.inv")
+    response = django.views.static.serve(request, document_root = get_doc_root_or_404(version, LANG), path = "objects.inv")
     response['Content-Type'] = "text/plain"
     return response
 

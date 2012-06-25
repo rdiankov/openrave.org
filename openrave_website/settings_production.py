@@ -14,7 +14,6 @@
 IPYTHON_DEBUG = False
 DEBUG = False
 TEMPLATE_DEBUG = False
-CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 
 EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = SECRETS.get('email')
 EMAIL_HOST='smtp.gmail.com'
@@ -43,7 +42,21 @@ SECURE_SSL_REDIRECT = False
 SECURE_FRAME_DENY = True
 SECURE_HSTS_SECONDS = 600
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTOCOL", "SSL")
-    
+
+CACHES = {
+    'default' : { 'BACKEND':'memcached://127.0.0.1:11011/',
+#                   'LOCATION': '/var/tmp/django_cache',
+#                   'TIMEOUT': 60,
+#                   'OPTIONS': { 'MAX_ENTRIES': 1000 }
+                }
+}
+
+
+CACHE_MIDDLEWARE_SECONDS = 60 * 5 # 5 minutes
+CACHE_MIDDLEWARE_KEY_PREFIX = 'openravedocs'
+CACHE_MIDDLEWARE_GZIP = True
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+
 MIDDLEWARE_CLASSES.insert(0, 'django.middleware.cache.UpdateCacheMiddleware')
 MIDDLEWARE_CLASSES.append('django.middleware.cache.FetchFromCacheMiddleware')
 

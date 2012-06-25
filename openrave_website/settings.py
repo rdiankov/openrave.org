@@ -64,7 +64,6 @@ LOCALE_PATHS=( os.path.join(ROOT_PATH,'..','locale'), )
 IPYTHON_DEBUG = True
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-CACHE_BACKEND = "dummy:///"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = "noreply@openrave.org"
 
@@ -110,7 +109,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django_push.subscriber',
-    'openrave_website',
+    'openrave_website.docs',
     'registration',
     'south',
     'djangosecure',
@@ -119,11 +118,6 @@ INSTALLED_APPS = [
 ]
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-
-CACHE_MIDDLEWARE_SECONDS = 60 * 5 # 5 minutes
-CACHE_MIDDLEWARE_KEY_PREFIX = 'openrave'
-CACHE_MIDDLEWARE_GZIP = True
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 MIDDLEWARE_CLASSES = [
     'djangosecure.middleware.SecurityMiddleware',
