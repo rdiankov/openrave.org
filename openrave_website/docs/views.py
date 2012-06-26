@@ -31,14 +31,9 @@ def index(request):
     return redirect(DocumentRelease.objects.default())
 
 def document(request, version, url):
-    LANG = get_language_from_request(request)
-    docroot = get_doc_root_or_404(version, LANG)
+    docroot,LANG = get_doc_root_or_404(version, get_language_from_request(request))
     doc_path = get_doc_path_or_404(docroot, url)
-    
-    template_names = [
-        'docs/%s.html' % os.path.relpath(os.path.splitext(doc_path)[0],docroot),
-        'doc.html',
-    ]
+    template_names = ['docs/%s.html'%os.path.relpath(os.path.splitext(doc_path)[0],docroot), 'docs/doc.html']
     return render_to_response(template_names, RequestContext(request, {
         'doc': simplejson.load(open(doc_path, 'rb')),
         'env': simplejson.load(open(os.path.join(docroot, 'globalcontext.json'), 'rb')),
@@ -48,6 +43,7 @@ def document(request, version, url):
         'update_date': datetime.datetime.fromtimestamp(os.stat(os.path.join(docroot,'last_build')).st_mtime),
         'home': urlresolvers.reverse('document-index', kwargs={'version':version}),
         'redirect_from': request.GET.get('from', None),
+        'GET':request.GET,
     }))
 
 class SphinxStatic(object):
@@ -58,12 +54,12 @@ class SphinxStatic(object):
         self.subpath = subpath
 
     def __call__(self, request, version, path):
-        LANG = get_language_from_request(request)
-        return django.views.static.serve(request,  document_root = os.path.join(get_doc_root_or_404(version, LANG), self.subpath), path = path)
+        docroot,LANG = get_doc_root_or_404(version, get_language_from_request(request))
+        return django.views.static.serve(request,  document_root = os.path.join(docroot, self.subpath), path = path)
 
 def objects_inventory(request, version):
-    LANG = get_language_from_request(request)
-    response = django.views.static.serve(request, document_root = get_doc_root_or_404(version, LANG), path = "objects.inv")
+    docroot,LANG = get_doc_root_or_404(version, get_language_from_request(request))
+    response = django.views.static.serve(request, document_root = docroot, path = "objects.inv")
     response['Content-Type'] = "text/plain"
     return response
 

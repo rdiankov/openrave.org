@@ -7,7 +7,7 @@
     <meta name="MSSmartTagsPreventParsing" content="true" />
     <meta name="Copyright" content="Rosen Diankov" />
     <meta name="keywords" content="openrave, open-source, motion planning, robotics, python, c++" />
-    <meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+    <meta name="description" content="Open Robotics Automation Virtual Environment" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/openrave_style.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/pygments.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tooltip_style.css">
@@ -21,7 +21,6 @@
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block coltype %}default{% endblock %}">
     <!-- Container -->
     <div id="container" class="document">
-
       <!-- Header -->
       <div id="header">
         <h1 id="logo"><a href="/"><img src="{{ STATIC_URL }}img/openrave_banner.png" width="300px" alt="OpenRAVE" /></a></h1>
@@ -35,8 +34,11 @@
       </div>
       <hr style="margin: 0.5em; border: 1px solid #5ca;"/>
 
-      <!-- Content -->
-      <div id="content" class="body">
+    <!-- END Header -->
+    <div id="billboard">{% block billboard %}{% endblock %}</div>
+    <div id="columnwrap">
+      {% block columnwrap %}
+        <div id="content" class="body">
         {% block pretitle %}{% endblock %}
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
         {% block content %}
@@ -45,11 +47,17 @@
         {% endblock %}
         {% block sidebar %}{% endblock %}
         <br class="clear" />
-      </div>
-      <!-- END Content -->
-
-      {% block footer %}<div id="footer"></div>{% endblock %}
+        </div>
+        <!-- END #content-main -->
+      {% endblock %}
     </div>
-
+    <!-- END #content -->
+    {% block footer %}
+    <div class="footer">
+      <p>&copy; 2006-{% now "Y" %} OpenRAVE Documentation under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a> unless otherwise noted.
+      </p>
+    </div>
+    {% endblock %}
+    </div>
   </body>
 </html>

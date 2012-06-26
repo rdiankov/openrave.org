@@ -21,8 +21,13 @@ def get_doc_root(version,lang):
 def get_doc_root_or_404(version,lang):
     docroot = get_doc_root(version,lang)
     if not os.path.exists(docroot):
+        if lang != 'en':
+            # default to english
+            return get_doc_root_or_404(version,'en')
+        
         raise Http404(docroot)
-    return docroot
+    
+    return docroot,lang
 
 def get_doc_path(docroot, subpath):
     # First look for <bits>/index.fpickle, then for <bits>.fpickle

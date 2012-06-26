@@ -31,16 +31,21 @@ Future DB Update::
     ./manage.py syncdb
     ./manage.py migrate
 
-6. Add new document::
+6. For Docs::
 
-  DJANGO_SETTINGS_MODULE=openrave_website.settings python -c "from openrave_website.docs import models; models.DocumentRelease.objects.create(lang='en',version='0.7.0', scm=models.DocumentRelease.SVN, scm_url='https://openrave.svn.sourceforge.net/svnroot/openrave/tags/0.7.0', is_default=True);"
+  ./manage.py loaddata doc_releases.json
+  ./manage.py update_docs 
+
+7. For adding new document::
+
+  DJANGO_SETTINGS_MODULE=openrave_website.settings python -c "from openrave_website.docs import models; models.DocumentRelease.objects.create(lang='en',version='0.7.0', scm=models.DocumentRelease.SVN, scm_url='https://openrave.svn.sourceforge.net/svnroot/openrave/tags/0.7.0', is_default=False);"
 
 Re-index the documents::
 
   ./manage.py update_docs
 
 
-Finally::
+8. Finally::
 
     python manage.py runserver
 

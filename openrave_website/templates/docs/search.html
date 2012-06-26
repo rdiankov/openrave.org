@@ -1,0 +1,53 @@
+{% extends "docs/doc.html" %}
+
+{% load docs %}
+
+{% block title %}Search | OpenRAVE Documentation{% endblock %}
+
+{% block toc-wrapper %}{% endblock %}
+{% block breadcrumbs-wrapper %}{% endblock %}
+{% block last-update-wrapper %}{% endblock %}
+
+{% block body %}
+  <form method="get" action="." id="page_search">
+    <p>
+      <label for="{{ form.q.auto_id }}">Search for:</label>
+      {{ form.q }}
+      <label for="{{ form.release.auto_id }}">in version:</label>
+      {{ form.release }}
+      <input type="submit" class="submit" value="Search" />
+    </p>
+  </form>
+</form>
+
+{% if query %}
+  {% load highlight %}
+  <h2>Results</h2>
+  <div id="search-results">
+    {% for result in page.object_list %}
+      <h3>
+        <a href="{% url document-detail version=result.version url=result.path %}">{{ result.title }}</a>
+      </h3>
+      <p>{% highlight result.text with query max_length 200 %}</p>
+    {% empty %}
+      <h3>No results found.</h3>
+    {% endfor %}
+  </div>
+
+  {% if page.has_previous or page.has_next %}
+    <div>
+      {% if page.has_previous %}
+        <a href="?q={{ query }}&amp;release={{ release.id }}&amp;page={{ page.previous_page_number }}">
+      {% endif %}
+      &laquo; Previous
+      {% if page.has_previous %}</a>{% endif %}
+      |
+      {% if page.has_next %}
+        <a href="?q={{ query }}&amp;release={{ release.id }}&amp;page={{ page.next_page_number }}">
+      {% endif %}
+      Next &raquo;
+      {% if page.has_next %}</a>{% endif %}
+    </div>
+  {% endif %}
+{% endif %}
+{% endblock %}

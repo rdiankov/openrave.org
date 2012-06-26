@@ -21,11 +21,10 @@ register = template.Library()
 
 @register.inclusion_tag('docs/search_form.html', takes_context=True)
 def search_form(context, search_form_id='sidebar_search'):
-    request = context['request']
     auto_id = 'id_%s_%%s' % search_form_id
-    release = DocumentRelease.objects.get(version=context['version'])
+    release = DocumentRelease.objects.get(version=context['version'],lang=context['lang'])
     return {
-        'form': DocSearchForm(initial=request.GET, auto_id=auto_id, release=release),
+        'form': DocSearchForm(initial=context.get('GET',''), auto_id=auto_id, release=release),
         'search_form_id': search_form_id,
     }
 
@@ -67,9 +66,9 @@ class AllDocVersionsTag(template.Node):
             if os.path.exists(version_root):
                 doc_path = get_doc_path(version_root, url)
                 if doc_path:
-                    versions.append(release.version)
+                    if not release.version in versions:
+                        versions.append(release.version)
 
         # Save the versions into the context
         context[self.asvar] = sorted(versions)
-
         return ''

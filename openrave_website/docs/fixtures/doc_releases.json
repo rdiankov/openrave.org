@@ -1,0 +1,24 @@
+[
+  {
+    "model": "docs.documentrelease",
+    "pk": 1,
+    "fields": {
+      "lang": "en",
+      "version": "latest_stable",
+      "scm": "svn",
+      "scm_url": "https://openrave.svn.sourceforge.net/svnroot/openrave/latest_stable",
+      "is_default": true
+    }
+  },
+  {
+    "model": "docs.documentrelease",
+    "pk": 2,
+    "fields": {
+      "lang": "ja",
+      "version": "latest_stable",
+      "scm": "svn",
+      "scm_url": "https://openrave.svn.sourceforge.net/svnroot/openrave/latest_stable",
+      "is_default": false
+    }
+  }
+]

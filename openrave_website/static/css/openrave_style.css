@@ -322,7 +322,7 @@ div.footer {
     padding: 3px 8px 3px 0;
     clear: both;
     font-size: 0.8em;
-    text-align: right;
+    text-align: left;
 }
 
 /*div.footer a {
@@ -592,7 +592,7 @@ ul.keywordmatches li.goodmatch a {
 }
 
 #doc-versions:hover {
-    background: transparent url(../img/site/invisible.gif) repeat; /* IE7 hack */
+    background: transparent url(../img/invisible.gif) repeat; /* IE7 hack */
     border-radius: 3px;
 }
 
@@ -621,7 +621,7 @@ ul.keywordmatches li.goodmatch a {
 }
 
 #doc-versions li.current {
-    background: #E0FFB8 url(../img/site/arrow-head-left.gif) 6px center no-repeat;
+    background: #E0FFB8 url(../img/arrow-head-left.gif) 6px center no-repeat;
     padding-left: 13px;
 }
 
@@ -672,4 +672,100 @@ div.versionchanged span.title {
 #documentation #content-main p > strong,
 #documentation #content-main p > b {
     color: #555;
+}
+
+
+/* MISC */
+
+/* COLUMNS */
+
+#columnwrap {
+    background:#EFF5F7;
+    padding-bottom:10px;
+}
+#subwrap {
+    //background:#326342;
+    width:73%;
+    float:left;
+    padding-bottom:10px;
+}
+#content-main {
+    float:left;
+    width:70%;
+    background:white;
+    color:black;
+    padding-bottom:10px;
+}
+#generic #content-main, #code #content-main {
+    width:100%;
+}
+#content-main * {
+    margin-left:22px;
+    margin-right:24px;
+}
+#content-main * * {
+    margin-left:0;
+    margin-right:0;
+}
+.sidebar {
+    font-size:92%;
+}
+.sidebar * {
+    margin-left:14px;
+    margin-right:14px;
+}
+.sidebar * * {
+    margin-left:0;
+    margin-right:0;
+}
+#content-extra {
+    float:right;
+    width:27%;
+}
+
+#content-related {
+    float:right;
+    width:30%;
+}
+#content-secondary {
+    clear:both;
+    background:#EFF5F7;
+    margin-left:0;
+    margin-right:0;
+    margin-top:15px;
+    margin-bottom:-10px;
+    padding:10px 24px;
+//    color:white;
+}
+
+#documentation #content-related .literal {
+    background:transparent !important;
+}
+
+#content-main .quiet {
+    color:#487858;
+}
+#content-secondary .quiet {
+    color:#90ba9e;
+}
+
+/*  CLEARFIX KLUDGE */
+
+#columnwrap:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+#columnwrap {
+    display: inline-block;
+}
+
+/* Hides from IE-mac \*/
+* html #columnwrap {
+    height: 1%;
+}
+#columnwrap {
+    display: block;
 }
