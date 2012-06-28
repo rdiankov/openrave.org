@@ -80,7 +80,7 @@ LOGGING["loggers"]["openrave_website"]["handlers"] = ["logfile"]
 
 OPENRAVE_DOCUMENT_ROOT_PATH = '/var/openrave/docdata/'
 MEDIA_ROOT = '/var/openrave/media/'
-MEDIA_URL = '/media/'
+MEDIA_URL = '/m/'
 STATIC_ROOT = '/var/openrave/static/'
-STATIC_URL = '/static/'
+STATIC_URL = '/s/'
 STATICFILES_DIRS = ('/var/www/static/',)

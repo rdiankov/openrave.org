@@ -41,6 +41,36 @@ class Command(NoArgsCommand):
         ),
     )
 
+    def UncompressHTML(self,release):
+        """uncompress the html files into MEDIA_ROOT
+        """
+        zipfilename = os.path.join(settings.OPENRAVE_DOCUMENT_ROOT_PATH,'openravehtml-%s.zip'%release.version)
+        if not os.path.exists(zipfilename):
+            print 'failed to find zipfile',zipfilename
+            return
+        
+        zipfiledir = os.path.join(settings.MEDIA_ROOT,'openravehtml-%s'%release.version)
+        docsdir = os.path.join(zipfiledir,release.lang,'coreapihtml')
+
+        douncompress = True
+        if os.path.exists(zipfiledir) and os.path.exists(docsdir):
+            # check if timestamps of zipfile and dir match
+            douncompress = os.stat(zipfiledir).st_mtime < os.stat(zipfilename).st_mtime
+
+        if douncompress:
+            print 'uncompressing',zipfilename
+            try:
+                zf = zipfile.ZipFile(zipfilename, 'r')
+            except IOError,e:
+                print e
+                return
+
+            for files in zf.namelist():
+                zf.extract(files, settings.MEDIA_ROOT)
+            zf.close()
+            # have to touch zipfiledir incase zip file did not overwrite its timestamp
+            os.utime(zipfiledir, None)
+                    
     def handle_noargs(self, **kwargs):
         try:
             verbosity = int(kwargs['verbosity'])
@@ -56,6 +86,8 @@ class Command(NoArgsCommand):
             if verbosity >= 1:
                 print "Updating %s..." % release
 
+            self.UncompressHTML(release)
+            
             zipfilename = os.path.join(settings.OPENRAVE_DOCUMENT_ROOT_PATH,'openravejson-%s.zip'%release.version)
             if not os.path.exists(zipfilename):
                 print 'failed to find zipfile',zipfilename

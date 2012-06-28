@@ -20,6 +20,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import get_language_from_request
+from django.conf import settings
 
 import haystack.views
 
@@ -57,6 +58,12 @@ class SphinxStatic(object):
         docroot,LANG = get_doc_root_or_404(version, get_language_from_request(request))
         return django.views.static.serve(request,  document_root = os.path.join(docroot, self.subpath), path = path)
 
+def doxygenstatic(request,version,path):
+    docroot,LANG = get_doc_root_or_404(version, get_language_from_request(request))
+    if len(path) == 0:
+        path = 'index.html'
+    return django.views.static.serve(request,  document_root = os.path.join(settings.MEDIA_ROOT,'openravehtml-%s'%version,LANG,'coreapihtml'), path = path)
+    
 def objects_inventory(request, version):
     docroot,LANG = get_doc_root_or_404(version, get_language_from_request(request))
     response = django.views.static.serve(request, document_root = docroot, path = "objects.inv")

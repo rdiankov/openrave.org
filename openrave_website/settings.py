@@ -67,14 +67,14 @@ TEMPLATE_DEBUG = DEBUG
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = "noreply@openrave.org"
 
-MEDIA_ROOT = ''
-MEDIA_URL = ''
+MEDIA_ROOT = os.path.join(ROOT_PATH,'..','media/')
+MEDIA_URL = '/m/'
 
 STATIC_ROOT = 'static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = '/s/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
