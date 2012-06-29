@@ -22,6 +22,7 @@ import optparse
 import subprocess
 import zipfile
 import sphinx.cmdline
+import shutil
 from contextlib import closing
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
@@ -48,8 +49,14 @@ class Command(NoArgsCommand):
         if not os.path.exists(zipfilename):
             print 'failed to find zipfile',zipfilename
             return
+
+        try:
+            os.makedirs(os.path.join(settings.MEDIA_ROOT,'docs'))
+        except OSError:
+            pass
         
         zipfiledir = os.path.join(settings.MEDIA_ROOT,'openravehtml-%s'%release.version)
+        destzipfile = os.path.join(settings.MEDIA_ROOT,'docs','openravehtml-%s.zip'%release.version)
         docsdir = os.path.join(zipfiledir,release.lang,'coreapihtml')
 
         douncompress = True
@@ -70,7 +77,11 @@ class Command(NoArgsCommand):
             zf.close()
             # have to touch zipfiledir incase zip file did not overwrite its timestamp
             os.utime(zipfiledir, None)
-                    
+
+        if not os.path.exists(destzipfile) or os.stat(destzipfile).st_mtime < os.stat(zipfilename).st_mtime:
+            print 'copying',zipfilename
+            shutil.copyfile(zipfilename,destzipfile)
+            
     def handle_noargs(self, **kwargs):
         try:
             verbosity = int(kwargs['verbosity'])
@@ -83,11 +94,11 @@ class Command(NoArgsCommand):
         # some global state. Anyway, we can work around it by making sure that
         # "dev" builds before "1.0". This is ugly, but oh well.
         for release in DocumentRelease.objects.order_by('-version'):
+            self.UncompressHTML(release)
+
             if verbosity >= 1:
                 print "Updating %s..." % release
 
-            self.UncompressHTML(release)
-            
             zipfilename = os.path.join(settings.OPENRAVE_DOCUMENT_ROOT_PATH,'openravejson-%s.zip'%release.version)
             if not os.path.exists(zipfilename):
                 print 'failed to find zipfile',zipfilename
