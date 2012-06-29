@@ -51,6 +51,9 @@ def deploy_code(ref=None):
         run('svn update')
     run('svn export %s %s'%(os.path.join(env.code_dir,'openrave_website','static'), os.path.join(env.deploy_base,'staticnew')))
     run('rm -rf %s; mv %s %s'%(os.path.join(env.deploy_base,'static'), os.path.join(env.deploy_base,'staticnew'), os.path.join(env.deploy_base,'static')))
+    # have to chown/chmod docdata for searching
+    sudo('chown -R $USER:www-data %s'%os.path.join(env.code_dir,'docdata'))
+    sudo('chmod -R g+w %s'%os.path.join(env.code_dir,'docdata'))
 
 def update_dependencies():
     """
