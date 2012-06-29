@@ -17,15 +17,18 @@ from django.db.utils import DatabaseError
 from .models import DocumentRelease
 
 if settings.IPYTHON_DEBUG:
-   from IPython.Shell import IPShellEmbed
+    from IPython.Shell import IPShellEmbed
    
 def recent_release(request):
     recent_release = cache.get('recent_release')
     try:
         if not recent_release:
-            recent_release = DocumentRelease.objects.default().version
+            recent_release = 'None'
+            for release in DocumentRelease.objects.order_by('-version'):
+                if release.version != 'latest_stable':
+                    recent_release = release.version
+                    break
             cache.set(DocumentRelease.DEFAULT_CACHE_KEY, recent_release, settings.CACHE_MIDDLEWARE_SECONDS)
         return {'RECENT_RELEASE': recent_release}
     except (DocumentRelease.DoesNotExist,DatabaseError):
         return {}
-    
