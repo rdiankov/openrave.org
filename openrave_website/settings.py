@@ -23,7 +23,11 @@ except KeyError:
     OPENRAVEORG_ENV = 'dev'
 
 # It's a secret to everybody
-SECRETS = json.load(open(os.path.join(ROOT_PATH,'..','openrave.org_secrets.json')))
+if MUJIN_ENV=='production':
+    SECRETS = json.load(open('/var/openrave.org_secrets.json'))
+else:
+    SECRETS = json.load(open(os.path.join(ROOT_PATH,'..','openrave.org_secrets.json')))
+    
 SECRET_KEY = str(SECRETS['secret_key'])
 # SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
 SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
@@ -215,3 +219,6 @@ if 'sentry_dsn' in SECRETS:
     #example SENTRY_DSN = 'http://public_key:secret_key@example.com/1'
     SENTRY_DSN = SECRETS['sentry_dsn']
     LOGGING["loggers"]["django.request"]["handlers"].remove("mail_admins")
+
+if MUJIN_ENV=='production':
+    from settings_production import *
