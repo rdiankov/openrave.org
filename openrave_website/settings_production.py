@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os, json
 IPYTHON_DEBUG = False
 DEBUG = False
 TEMPLATE_DEBUG = False
@@ -45,8 +46,8 @@ SECURE_HSTS_SECONDS = 600
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTOCOL", "SSL")
 
 CACHES = {
-    'default' : { 'BACKEND':'memcached://127.0.0.1:11011/',
-#                   'LOCATION': '/var/tmp/django_cache',
+    'default' : { 'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
 #                   'TIMEOUT': 60,
 #                   'OPTIONS': { 'MAX_ENTRIES': 1000 }
                 }
@@ -58,20 +59,59 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'openravedocs'
 CACHE_MIDDLEWARE_GZIP = True
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
+MIDDLEWARE_CLASSES = [
+    'djangosecure.middleware.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+]
 MIDDLEWARE_CLASSES.insert(0, 'django.middleware.cache.UpdateCacheMiddleware')
 MIDDLEWARE_CLASSES.append('django.middleware.cache.FetchFromCacheMiddleware')
 
-LOGGING["handlers"]["logfile"] = {
-    "formatter": "full",
-    "level": "DEBUG",
-    "class": "logging.handlers.TimedRotatingFileHandler",
-    "filename": "/var/log/openrave_website/website.log",
-    "when": "D",
-    "interval": 7,
-    "backupCount": 5,
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "simple": {"format": "[%(name)s] %(levelname)s: %(message)s"},
+        "full": {"format": "%(asctime)s [%(name)s] %(levelname)s: %(message)s"}
+    },
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+#        "logfile":{
+#            "formatter": "full",
+#            "level": "DEBUG",
+#            "class": "logging.handlers.TimedRotatingFileHandler",
+#            "filename": "/var/log/openrave_website/website.log",
+#            "when": "D",
+#            "interval": 7,
+#            "backupCount": 5,
+#            },
+    },
+    "loggers": {
+        "django.request": {
+            "handlers": ["mail_admins"],#,"logfile"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "openrave_website": {
+            "handlers": ["console"],#,"logfile"],
+            "level": "DEBUG",
+        }
+    }
 }
-LOGGING["loggers"]["django.request"]["handlers"].append("logfile")
-LOGGING["loggers"]["openrave_website"]["handlers"] = ["logfile"]
 
 # necessary?
 #HAYSTACK_SEARCH_ENGINE = 'xapian'

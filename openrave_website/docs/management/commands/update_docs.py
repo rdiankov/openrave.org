@@ -28,7 +28,6 @@ from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
-from unipath import FSPath as Path
 from ...models import DocumentRelease, Document
 
 class Command(NoArgsCommand):
