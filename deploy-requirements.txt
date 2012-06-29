@@ -12,7 +12,7 @@ python-memcached >= 1.45, < 2.0
 Sphinx
 South >= 0.7, < 0.8
 raven==1.9.4
-Unipath
+whoosh
 
 # django-contact-form doens't have a release compatible with Django 1.2.
 #http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
