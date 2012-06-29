@@ -94,12 +94,12 @@
     <h2>Download:</h2>
 <p>
   {% if version == "latest_stable" %}
-        {% trans "Offline (latest_stable version):" %}
-        <a href="{{ MEDIA_URL }}docs/openravehtml-{{ version }}.zip">HTML</a> |
-      {% else %}
-        {% trans "Offline (OpenRAVE {{ version }}):" %}
-        <a href="{{ MEDIA_URL }}docs/openravehtml-{{ version }}.zip">HTML</a> |
-      {% endif %}
-      <br>
+    {% trans "Offline" %} (latest_stable version):
+    <a href="{{ MEDIA_URL }}docs/openravehtml-{{ version }}.zip">HTML</a> |
+  {% else %}
+    {% trans "Offline" %} (OpenRAVE {{ version }}):
+    <a href="{{ MEDIA_URL }}docs/openravehtml-{{ version }}.zip">HTML</a> |
+  {% endif %}
+  <br/>
   {% endblock %}
 {% endblock %}
