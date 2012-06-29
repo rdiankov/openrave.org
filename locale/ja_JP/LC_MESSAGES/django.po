@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-23 05:05+0000\n"
+"POT-Creation-Date: 2012-06-29 10:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,43 +20,37 @@ msgstr ""
 msgid "Latest Stable"
 msgstr "最新安定版"
 
-#: openrave_website/templates/base.html:30
-#: openrave_website/templates/index.html:4
-msgid "Home"
-msgstr "ホーム"
+#: openrave_website/docs/models.py:68
+msgid ""
+"The relative path and filename of the document with respect to the directory "
+"already encoding the version/release information"
+msgstr ""
 
-#: openrave_website/templates/base.html:31
+#: openrave_website/templates/base.html:29
 #: openrave_website/templates/news.html:4
 msgid "News"
 msgstr "ニュース"
 
-#: openrave_website/templates/base.html:32
+#: openrave_website/templates/base.html:30
 #: openrave_website/templates/base_docs.html:5
 #: openrave_website/templates/base_docs.html:7
-#: openrave_website/templates/doc.html:3 openrave_website/templates/doc.html:6
+#: openrave_website/templates/docs/doc.html:3
+#: openrave_website/templates/docs/doc.html:6
 msgid "Documentation"
 msgstr "ドキュメント"
 
-#: openrave_website/templates/base.html:33
+#: openrave_website/templates/base.html:31
 #: openrave_website/templates/dev.html:5
 msgid "Development"
 msgstr "開発"
 
-#: openrave_website/templates/base.html:34
+#: openrave_website/templates/base.html:32
 msgid "Wiki"
 msgstr "ウィキ"
 
-#: openrave_website/templates/doc.html:22
-msgid ""
-"This document is for OpenRAVE's latest_stable version, which can be "
-"significantly different from the last official release."
-msgstr ""
-"OpenRAVEの最新安定版のドキュメントです。公開版と異なっている可能性があるので"
-"ご注意ください。"
-
-#: openrave_website/templates/doc.html:22
-msgid "Click on the links on the left to see other versions."
-msgstr "左のリンクにクリックすれば他のバージョンのドキュメントをご覧出来ます。"
+#: openrave_website/templates/index.html:4
+msgid "Home"
+msgstr "ホーム"
 
 #: openrave_website/templates/index.html:7
 msgid "Welcome to OpenRAVE"
@@ -99,3 +93,27 @@ msgstr ""
 "多くのコマンドラインツールも提供しているし、コアの部分が小さいので、ロボット"
 "コントローラと他のフレームワークに導入しやすいです。一つの目標は産業用ロボッ"
 "トの分野で使用されることです。"
+
+#: openrave_website/templates/docs/doc.html:22
+msgid ""
+"This document is for OpenRAVE's latest_stable version, which can be "
+"significantly different from the last official release."
+msgstr ""
+"OpenRAVEの最新安定版のドキュメントです。公開版と異なっている可能性があるので"
+"ご注意ください。"
+
+#: openrave_website/templates/docs/doc.html:22
+msgid "This document describes OpenRAVE'"
+msgstr ""
+
+#: openrave_website/templates/docs/doc.html:22
+msgid "Click on the links on the left to see other versions."
+msgstr "左のリンクにクリックすれば他のバージョンのドキュメントをご覧出来ます。"
+
+#: openrave_website/templates/docs/doc.html:97
+msgid "Offline (latest_stable version):"
+msgstr ""
+
+#: openrave_website/templates/docs/doc.html:100
+msgid "Offline (OpenRAVE {{ version }}):"
+msgstr ""
