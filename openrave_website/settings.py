@@ -220,5 +220,5 @@ if 'sentry_dsn' in SECRETS:
     SENTRY_DSN = SECRETS['sentry_dsn']
     LOGGING["loggers"]["django.request"]["handlers"].remove("mail_admins")
 
-if MUJIN_ENV=='production':
+if OPENRAVEORG_ENV=='production':
     from settings_production import *
