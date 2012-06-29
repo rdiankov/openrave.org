@@ -15,6 +15,7 @@ IPYTHON_DEBUG = False
 DEBUG = False
 TEMPLATE_DEBUG = False
 
+SECRETS = json.load(open('/var/openrave.org_secrets.json'))
 EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = SECRETS.get('email')
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
