@@ -15,7 +15,7 @@ framework.
 """
 import os,sys
 
-sys.path.append('/var/www/openrave.org')
+sys.path.append('/var/openrave/openrave.org_svn')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'openrave_website.settings')
 os.environ['OPENRAVEORG_ENV'] = 'production'
 
