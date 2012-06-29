@@ -23,7 +23,7 @@ except KeyError:
     OPENRAVEORG_ENV = 'dev'
 
 # It's a secret to everybody
-if MUJIN_ENV=='production':
+if OPENRAVEORG_ENV=='production':
     SECRETS = json.load(open('/var/openrave.org_secrets.json'))
 else:
     SECRETS = json.load(open(os.path.join(ROOT_PATH,'..','openrave.org_secrets.json')))
