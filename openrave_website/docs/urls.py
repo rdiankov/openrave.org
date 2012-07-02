@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     url(r'^(?P<version>[\w.-]+)/_images/(?P<path>.*)$', views.SphinxStatic('_images')),
     url(r'^(?P<version>[\w.-]+)/_source/(?P<path>.*)$', views.SphinxStatic('_sources')),
     url(r'^(?P<version>[\w.-]+)/_downloads/(?P<path>.*)$', views.SphinxStatic('_downloads')),
-    url(r'^(?P<version>[\w.-]+)/coreapihtml/(?P<path>.*)$', views.doxygenstatic),
+    url(r'^(?P<version>[\w.-]+)/coreapihtml/(?P<path>.*)$', views.doxygenstatic, name='doxygen-static'),
     url(r'^(.*)/index/$', views.redirect_index),
     url(r'^(?P<version>[\w.-]+)/(?P<urlpath>[\w./-]*)$', views.document, name = 'document-detail'),
 )
