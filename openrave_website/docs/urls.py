@@ -21,14 +21,14 @@ urlpatterns = patterns('',
     url(r'^$', views.index),
     url(r'^/$', views.index),
     url(r'^search/$', search_view_factory(view_class=views.DocSearchView), name = 'document-search'),
-    url(r'^(?P<version>[\w.-]+)/$', views.document, {'url': ''}, name = 'document-index'),
+    url(r'^(?P<version>[\w.-]+)/$', views.document, {'urlpath': ''}, name = 'document-index'),
     url(r'^(?P<version>[\w.-]+)/_objects/$', views.objects_inventory, name = 'objects-inv'),
     url(r'^(?P<version>[\w.-]+)/_images/(?P<path>.*)$', views.SphinxStatic('_images')),
     url(r'^(?P<version>[\w.-]+)/_source/(?P<path>.*)$', views.SphinxStatic('_sources')),
     url(r'^(?P<version>[\w.-]+)/_downloads/(?P<path>.*)$', views.SphinxStatic('_downloads')),
     url(r'^(?P<version>[\w.-]+)/coreapihtml/(?P<path>.*)$', views.doxygenstatic),
     url(r'^(.*)/index/$', views.redirect_index),
-    url(r'^(?P<version>[\w.-]+)/(?P<url>[\w./-]*)$', views.document, name = 'document-detail'),
+    url(r'^(?P<version>[\w.-]+)/(?P<urlpath>[\w./-]*)$', views.document, name = 'document-detail'),
 )
 
 if settings.DEBUG:
