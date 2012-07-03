@@ -49,6 +49,7 @@ def deploy_code(ref=None):
         run('svn checkout %s %s'%(env.svn_url,env.code_dir))
     with cd(env.code_dir):
         run('svn update')
+    run('rm -rf %s'%os.path.join(env.deploy_base,'staticnew'))
     run('svn export %s %s'%(os.path.join(env.code_dir,'openrave_website','static'), os.path.join(env.deploy_base,'staticnew')))
     run('rm -rf %s; mv %s %s'%(os.path.join(env.deploy_base,'static'), os.path.join(env.deploy_base,'staticnew'), os.path.join(env.deploy_base,'static')))
     # have to chown/chmod docdata for searching

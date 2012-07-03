@@ -36,8 +36,7 @@ def index(request):
 def document(request, version, urlpath):
     docroot,LANG = get_doc_root_or_404(version, get_language_from_request(request))
     if len(urlpath) > 0 and not urlpath.endswith('/'):
-        print 'yo',version,urlpath
-        return redirect('/docs/%s/%s/'%(version,urlpath))
+        return redirect('/docs/%s/%s/'%(version,urlpath),request)
     
     doc_path = get_doc_path_or_404(docroot, urlpath)
     template_names = ['docs/%s.html'%os.path.relpath(os.path.splitext(doc_path)[0],docroot), 'docs/doc.html']
