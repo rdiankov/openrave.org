@@ -53,7 +53,7 @@ def document(request, version, urlpath):
     }))
 
 def document_compat(request,urlpath):
-    # for compatibility with old openrave system, remove in 2013?
+    """for compatibility with old openrave system, remove in 2013?"""
     index = urlpath.find('.html')
     if index >= 0:
         urlpath = urlpath[:index]+'/'+urlpath[(index+5):]
@@ -76,6 +76,11 @@ def doxygenstatic(request,version,path):
     if len(path) == 0:
         path = 'index.html'
     return django.views.static.serve(request,  document_root = os.path.join(settings.MEDIA_ROOT,'openravehtml-%s'%version,LANG,'coreapihtml'), path = path)
+
+@xframe_options_exempt
+def doxygenstatic_compat(request,urlpath):
+    """for compatibility with old openrave system, remove in 2013?"""
+    return redirect('/docs/'+DocumentRelease.objects.default().version+'/coreapihtml/'+urlpath)
     
 def objects_inventory(request, version):
     docroot,LANG = get_doc_root_or_404(version, get_language_from_request(request))
