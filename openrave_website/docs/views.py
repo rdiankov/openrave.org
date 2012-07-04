@@ -52,6 +52,13 @@ def document(request, version, urlpath):
         'GET':request.GET,
     }))
 
+def document_compat(request,urlpath):
+    # for compatibility with old openrave system, remove in 2013?
+    index = urlpath.find('.html')
+    if index >= 0:
+        urlpath = urlpath[:index]+'/'+urlpath[(index+5):]
+    return redirect('/docs/'+DocumentRelease.objects.default().version+'/'+urlpath)
+
 class SphinxStatic(object):
     """
     Serve Sphinx static assets from a subdir of the build location.

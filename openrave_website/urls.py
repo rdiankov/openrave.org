@@ -63,6 +63,7 @@ urlpatterns = patterns('',
     url(r'^dev/$', indexview, {'name':'dev.html'}),
     url(r'^(?P<name>[\w\.]+)$', indexview),
     url(r'^docs/', include('openrave_website.docs.urls')),
+    url(r'^en/main/(?P<urlpath>[\w./-]*)$', 'openrave_website.docs.views.document_compat'),
     url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/openrave_icon_32.png'}),
     url(r'^m/(?P<path>.*)$','django.views.static.serve',{'document_root': settings.MEDIA_ROOT})
 )
