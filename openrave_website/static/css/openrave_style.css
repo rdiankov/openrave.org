@@ -769,3 +769,12 @@ div.versionchanged span.title {
 #columnwrap {
     display: block;
 }
+
+table.collada  {
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+table.collada td {
+    padding: 3px 3px;
+}
