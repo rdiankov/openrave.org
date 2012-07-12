@@ -777,4 +777,9 @@ table.collada  {
 }
 table.collada td {
     padding: 3px 3px;
+    border: 1px solid #000;
+}
+table.collada thead th {
+    padding: 3px 3px;
+    border: 1px solid #000;
 }
