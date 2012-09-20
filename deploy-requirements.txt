@@ -20,3 +20,5 @@ whoosh
 # xapian-haystack has a bug in 1.1.5beta fixed in trunk. So this
 # can go back to a packaged release as soon as there's a newer release.
 #-e git://github.com/notanumber/xapian-haystack.git@dc11c14542c0137831e5#egg=xapian-haystack
+
+
