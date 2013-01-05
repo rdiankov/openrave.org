@@ -13,7 +13,7 @@
 # limitations under the License.
 import os, json
 IPYTHON_DEBUG = False
-DEBUG = False
+DEBUG = True#False
 TEMPLATE_DEBUG = False
 
 SECRETS = json.load(open('/var/openrave.org_secrets.json'))
@@ -90,24 +90,24 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "simple",
         },
-#        "logfile":{
-#            "formatter": "full",
-#            "level": "DEBUG",
-#            "class": "logging.handlers.TimedRotatingFileHandler",
-#            "filename": "/var/log/openrave_website/website.log",
-#            "when": "D",
-#            "interval": 7,
-#            "backupCount": 5,
-#            },
+        "logfile":{
+            "formatter": "full",
+            "level": "DEBUG",
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": "/var/log/openrave_website/website.log",
+            "when": "D",
+            "interval": 7,
+            "backupCount": 5,
+            },
     },
     "loggers": {
         "django.request": {
-            "handlers": ["mail_admins"],#,"logfile"],
+            "handlers": ["mail_admins","logfile"],
             "level": "ERROR",
             "propagate": False,
         },
         "openrave_website": {
-            "handlers": ["console"],#,"logfile"],
+            "handlers": ["console","logfile"],
             "level": "DEBUG",
         }
     }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-29 10:36+0000\n"
+"POT-Creation-Date: 2013-01-05 17:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,18 @@ msgstr "開発"
 #: openrave_website/templates/base.html:32
 msgid "Wiki"
 msgstr "ウィキ"
+
+#: openrave_website/templates/dev.html:10
+msgid "Issues and Milestones"
+msgstr ""
+
+#: openrave_website/templates/dev.html:11
+msgid "Automating Testing Server"
+msgstr ""
+
+#: openrave_website/templates/dev.html:12
+msgid "Latest Developers Guide"
+msgstr ""
 
 #: openrave_website/templates/index.html:4
 msgid "Home"
@@ -110,10 +122,31 @@ msgstr ""
 msgid "Click on the links on the left to see other versions."
 msgstr "左のリンクにクリックすれば他のバージョンのドキュメントをご覧出来ます。"
 
-#: openrave_website/templates/docs/doc.html:97
-msgid "Offline (latest_stable version):"
+#: openrave_website/templates/docs/doc.html:82
+msgid "Core C++ API"
 msgstr ""
 
-#: openrave_website/templates/docs/doc.html:100
-msgid "Offline (OpenRAVE {{ version }}):"
+#: openrave_website/templates/docs/doc.html:83
+msgid "Python API"
+msgstr ""
+
+#: openrave_website/templates/docs/doc.html:84
+msgid "Developers Guide"
+msgstr ""
+
+#: openrave_website/templates/docs/doc.html:85
+msgid "Examples"
+msgstr ""
+
+#: openrave_website/templates/docs/doc.html:86
+msgid "Database Generators"
+msgstr ""
+
+#: openrave_website/templates/docs/doc.html:87
+msgid "Robots"
+msgstr ""
+
+#: openrave_website/templates/docs/doc.html:106
+#: openrave_website/templates/docs/doc.html:109
+msgid "Offline"
 msgstr ""

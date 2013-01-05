@@ -218,11 +218,12 @@ HAYSTACK_WHOOSH_PATH = os.path.join(OPENRAVE_DOCUMENT_ROOT_PATH,'openravedocs.in
 #         INSTALLED_APPS.append('debug_toolbar')
 
 # Log errors to Sentry instead of email, if available.
-if 'sentry_dsn' in SECRETS:
-    INSTALLED_APPS.append('raven.contrib.django')
-    #example SENTRY_DSN = 'http://public_key:secret_key@example.com/1'
-    SENTRY_DSN = SECRETS['sentry_dsn']
-    LOGGING["loggers"]["django.request"]["handlers"].remove("mail_admins")
+
+#if 'sentry_dsn' in SECRETS:
+#    INSTALLED_APPS.append('raven.contrib.django')
+#    #example SENTRY_DSN = 'http://public_key:secret_key@example.com/1'
+#    SENTRY_DSN = SECRETS['sentry_dsn']
+#    LOGGING["loggers"]["django.request"]["handlers"].remove("mail_admins")
 
 if OPENRAVEORG_ENV=='production':
     from settings_production import *
