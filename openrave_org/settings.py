@@ -16,6 +16,7 @@
 
 import os, json
 ROOT_PATH = os.path.dirname(__file__)
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 try:
     OPENRAVEORG_ENV = os.environ['OPENRAVEORG_ENV'].lower()
@@ -35,7 +36,9 @@ SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
 ADMINS = ( ('OpenRAVE Development', 'openrave.testing@gmail.com'), ('Rosen Diankov', 'rosen.diankov@gmail.com') )
 MANAGERS = ADMINS
 FEED_APPROVERS_GROUP_NAME = "feed-approver"
-TIME_ZONE = 'UTC'
+
+# Database
+# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -43,14 +46,16 @@ DATABASES = {
         'NAME': 'openrave_website',
         'USER': 'openrave',
         'PASSWORD': 'testpass',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'TIME_ZONE': 'UTC',
+        'HOST': '',
     }
 }
 
-# djangoproject.com has a router for Trac (openrave_website.trac.db_router.TracRouter) that can create django models from trac tables
-DATABASE_ROUTERS = []
+# Internationalization
+# https://docs.djangoproject.com/en/1.7/topics/i18n/
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -65,7 +70,7 @@ USE_TZ = True
 
 LOCALE_PATHS=( os.path.join(ROOT_PATH,'..','locale'), )
 
-IPYTHON_DEBUG = True
+IPYTHON_DEBUG = False
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -97,14 +102,17 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+ALLOWED_HOSTS = []
 
+# Application definition
+WSGI_APPLICATION = 'openrave_org.wsgi.application'
 SITE_ID = 1
-ROOT_URLCONF = 'openrave_website.urls'
-INSTALLED_APPS = [
+ROOT_URLCONF = 'openrave_org.urls'
+INSTALLED_APPS = (
+    #'django.contrib.admin',
     'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.staticfiles',
-    'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.flatpages',
     'django.contrib.humanize',
@@ -113,28 +121,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django_push.subscriber',
-    'openrave_website.docs',
-    'registration',
-    'south',
-    'djangosecure',
     'haystack',
-    #'django.contrib.admin',
-]
+    'openrave_org.docs',
+)
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE_CLASSES = (
     'djangosecure.middleware.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-]
+)
 
 # note that doxygen search will not work so have to exempt this
 X_FRAME_OPTIONS = 'DENY'
@@ -152,38 +157,8 @@ TEMPLATE_LOADERS = (
 )
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
-TEMPLATE_CONTEXT_PROCESSORS += ('openrave_website.docs.context_processors.recent_release',)
+TEMPLATE_CONTEXT_PROCESSORS += ('openrave_org.docs.context_processors.recent_release',)
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": True,
-    "formatters": {
-        "simple": {"format": "[%(name)s] %(levelname)s: %(message)s"},
-        "full": {"format": "%(asctime)s [%(name)s] %(levelname)s: %(message)s"}
-    },
-    "handlers": {
-        "mail_admins": {
-            "level": "ERROR",
-            "class": "django.utils.log.AdminEmailHandler",
-        },
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "simple",
-        },
-    },
-    "loggers": {
-        "django.request": {
-            "handlers": ["mail_admins"],
-            "level": "ERROR",
-            "propagate": False,
-        },
-        "openrave_website": {
-            "handlers": ["console"],
-            "level": "DEBUG",
-        }
-    }
-}
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 3
@@ -195,35 +170,15 @@ ACCOUNT_ACTIVATION_DAYS = 3
 OPENRAVE_DOCUMENT_ROOT_PATH = os.path.join(ROOT_PATH,'..','docdata')
 
 # Haystack settings
-HAYSTACK_SITECONF = 'openrave_website.docs.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = os.path.join(OPENRAVE_DOCUMENT_ROOT_PATH,'openravedocs.index')
+#HAYSTACK_SITECONF = 'openrave_website.docs.search_sites'
+#HAYSTACK_SEARCH_ENGINE = 'whoosh'
+#HAYSTACK_WHOOSH_PATH = os.path.join(OPENRAVE_DOCUMENT_ROOT_PATH,'openravedocs.index')
 
-# PubSubHubbub settings
-#PUSH_HUB = 'https://superfeedr.com/hubbub'
-#PUSH_CREDENTIALS = 'openrave_website.aggregator.utils.push_credentials'
-#PUSH_SSL_CALLBACK = False
-
-# If django-debug-toolbar is installed enable it.
-# if DEBUG:
-#     try:
-#         import debug_toolbar
-#     except ImportError:
-#         pass
-#     else:
-#         # Insert DDT after the common middleware
-#         common_index = MIDDLEWARE_CLASSES.index('django.middleware.common.CommonMiddleware')
-#         MIDDLEWARE_CLASSES.insert(common_index+1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
-#         INTERNAL_IPS = ['127.0.0.1']
-#         INSTALLED_APPS.append('debug_toolbar')
-
-# Log errors to Sentry instead of email, if available.
-
-#if 'sentry_dsn' in SECRETS:
-#    INSTALLED_APPS.append('raven.contrib.django')
-#    #example SENTRY_DSN = 'http://public_key:secret_key@example.com/1'
-#    SENTRY_DSN = SECRETS['sentry_dsn']
-#    LOGGING["loggers"]["django.request"]["handlers"].remove("mail_admins")
-
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(OPENRAVE_DOCUMENT_ROOT_PATH,'openravedocs.index'),
+    }
+}
 if OPENRAVEORG_ENV=='production':
     from settings_production import *

@@ -174,13 +174,13 @@ class Command(NoArgsCommand):
                         doc = documents.pop(path, Document(path=path, release=release))
                         doc.title = title
                         doc.save()
-                        haystack.site.update_object(doc)
+                        #haystack.site.update_object(doc)
 
             # Clean up any remaining documents.
             for doc in documents.values():
                 if verbosity >= 2:
                     print "Deleting:", doc
-                haystack.site.remove_object(doc)
+                #haystack.site.remove_object(doc)
                 doc.delete()
 
 #     def update_svn(self, url, destdir):

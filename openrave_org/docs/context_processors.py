@@ -17,7 +17,8 @@ from django.db.utils import DatabaseError
 from .models import DocumentRelease
 
 if settings.IPYTHON_DEBUG:
-    from IPython.Shell import IPShellEmbed
+    import IPython
+    IPython.embed()
    
 def recent_release(request):
     recent_release = cache.get('recent_release')

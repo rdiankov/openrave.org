@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url, include
 from django.conf import settings
 
 from haystack.views import search_view_factory
@@ -20,16 +20,17 @@ from . import views
 urlpatterns = patterns('',
     url(r'^$', views.index),
     url(r'^/$', views.index),
-    url(r'^search/$', search_view_factory(view_class=views.DocSearchView), name = 'document-search'),
-    url(r'^(?P<version>[\w.-]+)/$', views.document, {'urlpath': ''}, name = 'document-index'),
-    url(r'^(?P<version>[\w.-]+)/_objects/$', views.objects_inventory, name = 'objects-inv'),
+    url(r'^search/$', search_view_factory(view_class=views.DocSearchView), name = 'document_search'),
+    url(r'^(?P<version>[\w.-]+)/$', views.document, {'urlpath': ''}, name = 'document_index'),
+    url(r'^(?P<version>[\w.-]+)/_objects/$', views.objects_inventory, name = 'objects_inv'),
     url(r'^(?P<version>[\w.-]+)/_images/(?P<path>.*)$', views.SphinxStatic('_images')),
     url(r'^(?P<version>[\w.-]+)/_source/(?P<path>.*)$', views.SphinxStatic('_sources')),
     url(r'^(?P<version>[\w.-]+)/_downloads/(?P<path>.*)$', views.SphinxStatic('_downloads')),
-    url(r'^(?P<version>[\w.-]+)/coreapihtml/(?P<path>.*)$', views.doxygenstatic, name='doxygen-static'),
+    url(r'^(?P<version>[\w.-]+)/coreapihtml/(?P<path>.*)$', views.doxygenstatic, name='doxygen_static'),
     url(r'^(.*)/index/$', views.redirect_index),
-    url(r'^(?P<version>[\w.-]+)/(?P<urlpath>[\w./-]*)$', views.document, name = 'document-detail'),
+    url(r'^(?P<version>[\w.-]+)/(?P<urlpath>[\w./-]*)$', views.document, name = 'document_detail'),
 )
 
 if settings.DEBUG:
     urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve',  {'document_root': settings.MEDIA_ROOT}))
+

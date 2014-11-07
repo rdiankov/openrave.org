@@ -14,20 +14,24 @@
 import json
 from django.conf import settings
 from django.utils.html import strip_tags
-import haystack
-import haystack.indexes
+#import haystack
+#import haystack.indexes
+from haystack import indexes
 from . import utils
 from .models import Document
 
-class DocumentIndex(haystack.indexes.SearchIndex):
-    text = haystack.indexes.CharField(document=True)
-    lang = haystack.indexes.CharField(model_attr='release__lang', faceted=True)
-    version = haystack.indexes.CharField(model_attr='release__version', faceted=True)
-    path = haystack.indexes.CharField(model_attr='path')
-    title = haystack.indexes.CharField(model_attr='title')
+class DocumentIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True)
+    lang = indexes.CharField(model_attr='release__lang', faceted=True)
+    version = indexes.CharField(model_attr='release__version', faceted=True)
+    path = indexes.CharField(model_attr='path')
+    title = indexes.CharField(model_attr='title')
 
-    def get_queryset(self):
-        return Document.objects.all().select_related('release')
+    def get_model(self):
+        return Document 
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.all().select_related('release')
 
     def prepare_text(self, obj):
         root = utils.get_doc_root(obj.release.version,obj.release.lang)
@@ -36,4 +40,3 @@ class DocumentIndex(haystack.indexes.SearchIndex):
             doc = json.load(fp)
         return strip_tags(doc['body']).replace(u'¶', '')
 
-haystack.site.register(Document, DocumentIndex)

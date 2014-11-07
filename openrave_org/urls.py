@@ -16,11 +16,13 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 
 from django.shortcuts import render_to_response
+from django.shortcuts import redirect
 from django.template import RequestContext
 from django.utils.translation import get_language_from_request
 
 if settings.IPYTHON_DEBUG:
-    from IPython.Shell import IPShellEmbed
+    import IPython
+    IPython.embed()
     #ipshell = IPShellEmbed(argv='',banner = 'MUJIN Controller Dropping into IPython',exit_msg = 'Leaving Interpreter.')
     #ipshell(local_ns=locals())
 
@@ -56,15 +58,19 @@ def indexview(request,name):
     return render_to_response(name, RequestContext(request,htmlvars))
 
 urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'openrave_org.views.home', name='home'),
+    # url(r'^blog/', include('blog.urls')),
+
     # Uncomment the next line to enable the admin:
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^$', indexview, {'name':'index.html'}),
     url(r'^news/$', indexview, {'name':'news.html'}),
     url(r'^dev/$', indexview, {'name':'dev.html'}),
     url(r'^(?P<name>[\w\.]+)$', indexview),
-    url(r'^docs/', include('openrave_website.docs.urls')),
-    url(r'^en/main/(?P<urlpath>[\w./-]*)$', 'openrave_website.docs.views.document_compat'),
-    url(r'^en/coreapihtml/(?P<urlpath>[\w./-]*)$', 'openrave_website.docs.views.doxygenstatic_compat'),
-    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/openrave_icon_32.png'}),
+    url(r'^docs/', include('openrave_org.docs.urls')),
+    url(r'^en/main/(?P<urlpath>[\w./-]*)$', 'openrave_org.docs.views.document_compat'),
+    url(r'^en/coreapihtml/(?P<urlpath>[\w./-]*)$', 'openrave_org.docs.views.doxygenstatic_compat'),
+    url(r'^favicon\.ico$', 'redirect', {'url': '/static/img/openrave_icon_32.png'}),
     url(r'^m/(?P<path>.*)$','django.views.static.serve',{'document_root': settings.MEDIA_ROOT})
 )

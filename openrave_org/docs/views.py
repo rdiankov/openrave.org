@@ -18,7 +18,7 @@ from django.core import urlresolvers
 from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from django.utils import simplejson
+import json as simplejson
 from django.utils.translation import get_language_from_request
 from django.conf import settings
 
@@ -47,7 +47,7 @@ def document(request, version, urlpath):
         'version': version,
         'docurl': urlpath,
         'update_date': datetime.datetime.fromtimestamp(os.stat(os.path.join(docroot,'last_build')).st_mtime),
-        'home': urlresolvers.reverse('document-index', kwargs={'version':version}),
+        'home': urlresolvers.reverse('document_index', kwargs={'version':version}),
         'redirect_from': request.GET.get('from', None),
         'GET':request.GET,
     }))
