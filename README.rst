@@ -25,9 +25,9 @@ Once puppet is installed, the following commands will clone this repo into your 
 
 ::
 
+<<<<<<< HEAD
   mkdir -p $FACTER_OPENRAVEORG_GITDIR
   git clone https://github.com/rdiankov/openrave.org.git --branch django1.7 $FACTER_OPENRAVEORG_GITDIR
-
 
 Apply Puppet
 ------------------
@@ -43,7 +43,7 @@ Setup documentation
 1. Go into the website directory and activate the virtual environment, then migrate with Django
 ::
 
-  cd $FACTER_WEB_OPENRAVORG
+  cd $FACTER_OPENRAVEORG_SITEDIR
   source ../../openravevenv/bin/activate
   ./manage.py makemigrations
   ./manage.py migrate
@@ -72,7 +72,7 @@ Run puppet apply command to update permissions for documents
 ::
 
    deactivate
-   puppet apply $FACTER_PUPPET_OPENRAVORG/manifests/site.pp --confdir $FACTER_PUPPET_OPENRAVORG
+   puppet apply $FACTER_OPENRAVEORG_PUPPETDIR/manifests/site.pp --confdir $FACTER_OPENRAVEORG_PUPPETDIR
 
 ::
 
