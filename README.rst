@@ -10,9 +10,9 @@ First, install puppet.  For Debian Wheezy, use the following steps:
 
   export FACTER_localuser=www-data
   export FACTER_localgroup=www-data
-  export FACTER_OPENRAVORG="/var/openrave"
-  export FACTER_PUPPET_OPENRAVORG="/var/openrave/puppet"
-  export FACTER_WEB_OPENRAVORG="/var/openrave/openrave_org"
+  export FACTER_OPENRAVEORG_DEPLOYDIR="/var/openrave"
+  export FACTER_OPENRAVEORG_PUPPETDIR="$FACTER_OPENRAVEORG_DEPLOYDIR/puppet"
+  export FACTER_OPENRAVEORG_SITEDIR="$FACTER_OPENRAVEORG_DEPLOYDIR/openrave_org"
 
   wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
   dpkg -i puppetlabs-release-precise.deb
@@ -26,8 +26,8 @@ Once puppet is installed, the following commands will clone this repo into your 
 
 ::
 
-  mkdir -p $FACTER_OPENRAVORG
-  git clone https://github.com/rdiankov/openrave.org.git --branch django1.7 $FACTER_OPENRAVORG
+  mkdir -p $FACTER_OPENRAVEORG_DEPLOYDIR
+  git clone https://github.com/rdiankov/openrave.org.git --branch django1.7 $FACTER_OPENRAVEORG_DEPLOYDIR
 
 
 Apply Puppet
@@ -36,7 +36,7 @@ Running puppet apply, will apply the manifest in a standalone setup.  Documentat
 
 ::
 
-  puppet apply $FACTER_PUPPET_OPENRAVORG/manifests/site.pp --confdir $FACTER_PUPPET_OPENRAVORG
+  puppet apply $FACTER_OPENRAVEORG_PUPPETDIR/manifests/site.pp --confdir $FACTER_OPENRAVEORG_PUPPETDIR
 
 
 Setup documentation
@@ -44,7 +44,7 @@ Setup documentation
 1. Go into the website directory and activate the virtual environment, then migrate with Django
 ::
 
-  cd $FACTER_WEB_OPENRAVORG
+  cd $FACTER_OPENRAVEORG_SITEDIR
   source ../../openravevenv/bin/activate
   ./manage.py makemigrations
   ./manage.py migrate
@@ -73,7 +73,7 @@ Run puppet apply command to update permissions for documents
 ::
 
    deactivate
-   puppet apply $FACTER_PUPPET_OPENRAVORG/manifests/site.pp --confdir $FACTER_PUPPET_OPENRAVORG
+   puppet apply $FACTER_OPENRAVEORG_PUPPETDIR/manifests/site.pp --confdir $FACTER_OPENRAVEORG_PUPPETDIR
 
 ::
 
