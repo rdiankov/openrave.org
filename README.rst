@@ -43,7 +43,7 @@ Setup documentation
 ::
 
   cd $FACTER_openraveorg_sitedir
-  source ../../openravevenv/bin/activate
+  source ../venv/bin/activate
   ./manage.py makemigrations
   ./manage.py migrate
 
@@ -57,6 +57,7 @@ Setup documentation
 
    scp www-data@128.199.207.239:/var/opraveorg-tmp/docdata.tar.gz docdata.tar.gz
    tar -vxzf docdata.tar.gz
+   rm docdata.tar.gz
    ./manage.py update_docs
 
 4. Re-index the documents:
@@ -71,10 +72,7 @@ Run puppet apply command to update permissions for documents
 ::
 
    deactivate
-   puppet apply --confdir $FACTER_openraveorg_sitedir/puppet $FACTER_openraveorg_sitedir/puppet/manifests/site.pp 
-
-::
-
+   puppet apply --confdir $FACTER_openraveorg_deploydir/puppet $FACTER_openraveorg_deploydir/puppet/manifests/site.pp
    init 6
 
 
