@@ -1,0 +1,21 @@
+django == 1.7.1
+markdown
+psycopg2 == 2.5.4
+django_push == 0.6.1
+django-secure == 1.0.1
+django-haystack == 2.3.1
+django-registration == 1.0
+whoosh == 2.6.0
+ipython == 2.3.0
+Jinja2 == 2.7.3
+MarkupSafe == 0.23
+Pygments == 1.6
+Unipath == 1.0
+Werkzeug == 0.9.6
+argparse == 1.2.1
+docutils == 0.12
+feedparser == 5.1.3
+requests == 2.4.3
+wsgiref == 0.1.2
+Sphinx
+itsdangerous == 0.24

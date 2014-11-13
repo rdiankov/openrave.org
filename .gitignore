@@ -1,0 +1,16 @@
+openrave_org/media/
+openrave_org/docdata/
+openrave_org/docdata
+*.pyc
+*.o
+openrave_org/openrave_org/docs/migrations/*.py*
+!__init__.py
+puppet/ssl/
+puppet/auth.conf
+puppet/console.conf
+puppet/fileserver.conf
+puppet/hiera.yaml
+puppet/puppet.conf
+puppet/puppetdb.conf
+puppet/routes.yaml
+puppet/modules/vcsrepo/

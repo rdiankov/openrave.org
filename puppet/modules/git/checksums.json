@@ -1,0 +1,19 @@
+{
+  "CHANGELOG": "4ec4c6cb650c9cae0173d0c4c2fd9797",
+  "LICENSE": "6089b6bd1f0d807edb8bdfd76da0b038",
+  "README.md": "f79c50bfafc2578dee6f3421de7f3a3e",
+  "Rakefile": "0254db5d3fc38c67a2c160d7296a24f8",
+  "files/subtree/bash_completion.sh": "c57bf60a42d16a45ce71623c5c18edf1",
+  "lib/facter/git_exec_path.rb": "f0a4e9450e065a2d452e32bc3f918811",
+  "lib/facter/git_html_path.rb": "cf5f6643d10cf6b24a38d5087b262843",
+  "lib/facter/git_version.rb": "b3d84b1555831d31c86839318e702918",
+  "manifests/config.pp": "c958cbeb73f7b0abbf3822c07c4d35ed",
+  "manifests/gitosis.pp": "6b1bbd3a43baa63c63f5d03dcb9fbe95",
+  "manifests/init.pp": "abce8f2951e6dde07ff9a7a128a34b74",
+  "manifests/subtree.pp": "53119ded48530364fa7d89c1b9de4c90",
+  "metadata.json": "fe6b964159f7519434f0551f816aec2c",
+  "spec/classes/git_subtree_spec.rb": "3a41800d3cef2e615633d50bfc64a771",
+  "spec/spec_helper.rb": "0db89c9a486df193c0e40095422e19dc",
+  "tests/gitosis.pp": "4a9f134fbd08096dac65aafa9fbc0742",
+  "tests/init.pp": "bbf47fdd0ad67c6fa1d47d39fdd6a94b"
+}
