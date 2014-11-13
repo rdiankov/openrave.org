@@ -23,16 +23,6 @@ filebucket { 'main':
   path   => false,
 }
 
-$local_user = $localuser ? {
-      undef => "www-data",
-      default => $localuser
-}
-$local_group = $localgroup ? { 
-      undef => "www-data",
-      default => $localgroup
-}
-
-
 # Make filebucket 'main' the default backup location for all File resources:
 File { backup => 'main' }
 
@@ -81,48 +71,28 @@ node default {
   }
 #  user::create {'jenkins':
 #    password   => '$1$963viJj/$VUiSdG/Sjsj4bsQD1uXTX0',
-#    groups     => '$local_user',
+#    groups     => '$localuser',
 #    sshkeytype => 'ssh-rsa',
 #    sshkey     => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC8EmeGfKH2vIfoGzaBOJUuns6SoYUdvouXqETChF/tzlcTMfKFdvsHUCJMDs8h3WnEiIwqWTSlyIKVYYvsI6EXPu94lILh4Dg668oaTl34YAw1h0GLAEBgjQXlSNRbm6jVvsHeEUHbtvr5VcSyKDFGbfkpp2Cz7iOzi8G2IjXLqiP6VZcVuo12CBlJgNaeke8TvL0soFcFa9aWRPa/tp/NApgj5fafKlC6TUdqh7j/ZbcyKh+flOGtcWzFCt7R6KkbEJZUc4L5a/hwO4iMEWWHMwI6ANWYDXEW2qLA4H8mVrvgm3PfFdPsOQlTSZIiGRqQLrf3sDUgHUOqdW8eges3',
 #    #sshkey     => '' #ssh public key without type and user indicators  
 #}
 
-  file {'/var/openrave':
+  file {"${openraveorg_deploydir}":
     ensure => directory,
-    owner   => "${local_user}",
-    group   => "${local_group}",
+    owner   => "${localuser}",
+    group   => "${localgroup}",
   }~>
-  file {'/var/openrave/openrave_org_migrations':
+  file {"${openraveorg_deploydir}/openrave_org_migrations":
     ensure => directory,
-    owner   => "${local_user}",
-    group   => "${local_group}",
+    owner   => "${localuser}",
+    group   => "${localgroup}",
   }~>
-  file {'/var/openrave/puppet':
-    ensure => directory,
-    owner  => "${local_user}",
-    group  => "${local_group}",
-  }~>
-  file {'/var/openrave/openrave_org_migrations/__init__.py': 
+  file {"${openraveorg_deploydir}/openrave_org_migrations/__init__.py": 
     ensure => present, 
-    owner => "${local_user}", 
-    group => "${local_group}",
+    owner => "${localuser}", 
+    group => "${localgroup}",
     #mode => 0644, 
   }~>
-  #clone django git code into the server
-  git::clone {'openrave_org':
-    repo    => 'https://github.com/cinvoke/openrave.org_djangoupgrade.git',
-    path    => '/var/openrave/',
-    dir     => 'openrave_org',
-  }~>
-  file {'/var/openrave/openrave_org':
-    ensure  => directory,
-    owner   => "${local_user}",
-    group   => "${local_group}",
-    #mode    => 0774,
-    recurse => true,
-    ignore  => '*.sock',
-  }
- 
   class { 'python':
     version    => 'system',
     pip        => true,
@@ -130,28 +100,28 @@ node default {
     virtualenv => true,
     gunicorn   => false,
   }
-  python::virtualenv { '/var/openrave/openrave_org' :
+  python::virtualenv { "${openraveorg_gitdir}/openrave_org" :
     ensure       => present,
     version      => 'system',
-    requirements => '/var/openrave/openrave_org/requirements.txt',
+    requirements => "${openraveorg_gitdir}/openrave_org/requirements.txt",
     systempkgs   => true,
     distribute   => false,
-    venv_dir     => '/var/openravevenv',
-    owner        => "${local_user}",
-    group        => "${local_group}",
-    cwd          => '/var/openrave/openrave_org',
+    venv_dir     => "${openraveorg_deploydir}/venv",
+    owner        => "${localuser}",
+    group        => "${localgroup}",
+    cwd          => "${openraveorg_gitdir}/openrave_org",
     timeout      => 0,
   }
  
   nginx::siteconfig {'openrave_nginx.conf':
     source => 'puppet:///modules/nginx/openrave_nginx.conf',
-    owner  => "${local_user}",
-    group  => "${local_group}"
+    owner  => "${localuser}",
+    group  => "${localgroup}"
   }
   uwsgi::siteconfig{'openrave_uwsgi.ini':
     source => 'puppet:///modules/uwsgi/openrave_uwsgi.ini',
-    owner  => "${local_user}",
-    group  => "${local_group}",
+    owner  => "${localuser}",
+    group  => "${localgroup}",
   }
 }
 

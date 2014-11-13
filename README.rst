@@ -8,11 +8,10 @@ First, install puppet.  For Debian Wheezy, use the following steps:
 
 ::
 
-  export FACTER_localuser=www-data
-  export FACTER_localgroup=www-data
-  export FACTER_OPENRAVORG="/var/openrave"
-  export FACTER_PUPPET_OPENRAVORG="/var/openrave/puppet"
-  export FACTER_WEB_OPENRAVORG="/var/openrave/openrave_org"
+  export FACTER_localuser=$USER
+  export FACTER_localgroup=$USER
+  export FACTER_openraveorg_gitdir= $PWD/openrave.org
+  export FACTER_openraveorg_deploydir="/var/openrave"
 
   wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
   dpkg -i puppetlabs-release-precise.deb
@@ -26,8 +25,8 @@ Once puppet is installed, the following commands will clone this repo into your 
 
 ::
 
-  mkdir -p $FACTER_OPENRAVORG
-  git clone https://github.com/rdiankov/openrave.org.git --branch django1.7 $FACTER_OPENRAVORG
+  mkdir -p $FACTER_OPENRAVEORG_GITDIR
+  git clone https://github.com/rdiankov/openrave.org.git --branch django1.7 $FACTER_OPENRAVEORG_GITDIR
 
 
 Apply Puppet
@@ -36,7 +35,7 @@ Running puppet apply, will apply the manifest in a standalone setup.  Documentat
 
 ::
 
-  puppet apply $FACTER_PUPPET_OPENRAVORG/manifests/site.pp --confdir $FACTER_PUPPET_OPENRAVORG
+  puppet apply --confdir $FACTER_OPENRAVEORG_GITDIR/puppet $FACTER_OPENRAVEORG_GITDIR/puppet/manifests/site.pp
 
 
 Setup documentation
@@ -79,6 +78,7 @@ Run puppet apply command to update permissions for documents
 
    init 6
 
+
 Visit site at port :80
 
 Notes
@@ -93,7 +93,13 @@ For adding new document:
     export OPENRAVE_VERSION=0.8.0
     export DOC_LANG=en
     DJANGO_SETTINGS_MODULE=openrave_org.settings python -c "from openrave_org.docs import models; models.DocumentRelease.objects.create(lang='$DOC_LANG',version='$OPENRAVE_VERSION', scm=models.DocumentRelease.GIT, scm_url='https://github.com/rdiankov/openrave/tree/v$OPENRAVE_VERSION', is_default=False);"
-  
+
+Facter
+================  
+::
+    facter -p  #See if you evn vars are set
+    facter apply --test
+
 
 Creating PostgreSQL Database
 ---------------------
