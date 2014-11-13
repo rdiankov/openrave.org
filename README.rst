@@ -34,7 +34,7 @@ Running puppet apply, will apply the manifest in a standalone setup.  Documentat
 
 ::
 
-  puppet apply --confdir FACTER_openraveorg_deploydir/puppet FACTER_openraveorg_deploydir/puppet/manifests/site.pp
+  puppet apply --confdir $FACTER_openraveorg_deploydir/puppet $FACTER_openraveorg_deploydir/puppet/manifests/site.pp
 
 
 Setup documentation
@@ -71,7 +71,7 @@ Run puppet apply command to update permissions for documents
 ::
 
    deactivate
-   puppet apply --confdir FACTER_openraveorg_sitedir/puppet FACTER_openraveorg_sitedir/puppet/manifests/site.pp 
+   puppet apply --confdir $FACTER_openraveorg_sitedir/puppet $FACTER_openraveorg_sitedir/puppet/manifests/site.pp 
 
 ::
 
