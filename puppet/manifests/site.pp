@@ -23,6 +23,9 @@ filebucket { 'main':
   path   => false,
 }
 
+
+
+
 # Make filebucket 'main' the default backup location for all File resources:
 File { backup => 'main' }
 
@@ -43,7 +46,6 @@ node default {
   include user
   include nginx
   include uwsgi
-
   class { 'postgresql::server': }
 
   postgresql::server::role { 'openrave':

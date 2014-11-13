@@ -102,6 +102,8 @@ Facter
 
     facter apply  --verbose --no-listen --no-daemonize --onetime --no-splay --test --pluginsync
 
+    puppet config print all
+    puppet config print modulepath
 Creating PostgreSQL Database
 ---------------------
 If you need to setup the database manually
