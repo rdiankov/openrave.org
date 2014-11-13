@@ -12,6 +12,7 @@ First, install puppet.  For Debian Wheezy, use the following steps:
   export FACTER_localgroup=www-data
   export FACTER_OPENRAVORG="/var/openrave"
   export FACTER_PUPPET_OPENRAVORG="/var/openrave/puppet"
+  export FACTER_WEB_OPENRAVORG="/var/openrave/openrave_org"
 
   wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
   dpkg -i puppetlabs-release-precise.deb
@@ -43,7 +44,7 @@ Setup documentation
 1. Go into the website directory and activate the virtual environment, then migrate with Django
 ::
 
-  cd $FACTER_PUPPET_OPENRAVORG
+  cd $FACTER_WEB_OPENRAVORG
   source ../../openravevenv/bin/activate
   ./manage.py makemigrations
   ./manage.py migrate
