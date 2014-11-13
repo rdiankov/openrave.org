@@ -12,7 +12,7 @@ First, install puppet.  For Debian Wheezy, use the following steps:
   export FACTER_localgroup=$USER
   export FACTER_openraveorg_gitdir= $PWD/openrave.org
   export FACTER_openraveorg_deploydir="/var/openrave"
-
+  export FACTER_OPENRAVEORG_SITEDIR="$FACTER_OPENRAVEORG_DEPLOYDIR/openrave_org"
   wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
   dpkg -i puppetlabs-release-precise.deb
   apt-get update
@@ -25,7 +25,7 @@ Once puppet is installed, the following commands will clone this repo into your 
 
 ::
 
-  mkdir -p $FACTER_OPENRAVEORG_GITDIR
+  mkdir -p $FACTER_openraveorg_gitdir
   git clone https://github.com/rdiankov/openrave.org.git --branch django1.7 $FACTER_OPENRAVEORG_GITDIR
 
 Apply Puppet
@@ -34,7 +34,7 @@ Running puppet apply, will apply the manifest in a standalone setup.  Documentat
 
 ::
 
-  puppet apply --confdir $FACTER_OPENRAVEORG_GITDIR/puppet $FACTER_OPENRAVEORG_GITDIR/puppet/manifests/site.pp
+  puppet apply --confdir $FACTER_openraveorg_gitdir/puppet $FACTER_openraveorg_gitdir/puppet/manifests/site.pp
 
 
 Setup documentation
