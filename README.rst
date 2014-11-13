@@ -40,12 +40,13 @@ Running puppet apply, will apply the manifest in a standalone setup.  Documentat
 
 Setup documentation
 ------------------
-1. Go into the checkout directory and activate the virtual environment, then migrate with Django
+1. Go into the website directory and activate the virtual environment, then migrate with Django
 ::
 
-   source ../../openravevenv/bin/activate
-   ./manage.py makemigrations
-   ./manage.py migrate
+  cd $FACTER_PUPPET_OPENRAVORG
+  source ../../openravevenv/bin/activate
+  ./manage.py makemigrations
+  ./manage.py migrate
 
 2. Load fixtures
 ::
