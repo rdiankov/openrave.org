@@ -71,7 +71,7 @@ Run puppet apply command to update permissions for documents
 ::
 
    deactivate
-   puppet apply $FACTER_OPENRAVEORG_PUPPETDIR/manifests/site.pp --confdir $FACTER_OPENRAVEORG_PUPPETDIR
+   puppet apply --confdir $FACTER_openraveorg_gitdir/puppet $FACTER_openraveorg_gitdir/puppet/manifests/site.pp 
 
 ::
 
@@ -95,10 +95,12 @@ For adding new document:
 
 Facter
 ================  
-::
-    facter -p  #See if you evn vars are set
+
+    facter -p  #See if your evn vars are set
+
     facter apply --test
 
+    facter apply  --verbose --no-listen --no-daemonize --onetime --no-splay --test --pluginsync
 
 Creating PostgreSQL Database
 ---------------------
