@@ -12,7 +12,7 @@ First, install puppet.  For Debian Wheezy, use the following steps:
   export FACTER_localgroup=$USER
   export FACTER_openraveorg_gitdir= $PWD/openrave.org
   export FACTER_openraveorg_deploydir="/var/openrave"
-  export FACTER_OPENRAVEORG_SITEDIR="$FACTER_OPENRAVEORG_DEPLOYDIR/openrave_org"
+  export FACTER_openraveorg_sitedir="$FACTER_openraveorg_deploydir/openrave.org"
   wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
   dpkg -i puppetlabs-release-precise.deb
   apt-get update
