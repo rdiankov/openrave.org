@@ -10,7 +10,7 @@ First, install puppet.  For Debian Wheezy, use the following steps:
 
   export FACTER_localuser=www-data
   export FACTER_localgroup=www-data
-  export FACTER_OPENRAVEORG="/var/openrave"
+  export FACTER_OPENRAVORG="/var/openrave"
   export FACTER_PUPPET_OPENRAVORG="/var/openrave/puppet"
 
   wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
