@@ -17,8 +17,6 @@ First, install puppet.  For Debian Wheezy, use the following steps:
   dpkg -i puppetlabs-release-precise.deb
   apt-get update
   apt-get install puppet
-  *#put this is puppet.conf:*
-  PUPPET_EXTRA_OPTS="--confdir $PUPPET_OPENRAVORG"
 
 
 Clone Repo
