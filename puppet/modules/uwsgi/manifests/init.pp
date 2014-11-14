@@ -8,24 +8,19 @@ class uwsgi ($owner='www-data',$group='www-data',$inidir='/etc/uwsgi') {
   uwsgi::install{'install-uwsgi':
     owner => $owner,
     group => $group,
+    inidir => $inidir,
   }
 }
 
-define uwsgi::install($owner,$group) {
+define uwsgi::install($owner,$group,$inidir) {
   python::pip {'uwsgi':
     pkgname => 'uwsgi', 
   }
 
-  file {"/etc/uwsgi":
+  file {"$inidir":
     ensure => directory,
     owner => $owner,
     group => $group,
-  }
-  file {"/etc/uwsgi/vassals":
-    ensure  => directory,
-    owner   => $owner,
-    group   => $group,
-    require => File['/etc/uwsgi'],
   }
   file {'/var/log/uwsgi':
     ensure => directory,
@@ -45,7 +40,7 @@ define uwsgi::install($owner,$group) {
   }
   concat::fragment {'02_rc.local_custom':
     target => '/etc/rc.local',
-    content => "/usr/local/bin/uwsgi --emperor ${deploydir}/vassals --uid ${localuser} --gid ${localgroup}\n",
+    content => "/usr/local/bin/uwsgi --emperor $inidir --uid ${localuser} --gid ${localgroup}\n",
     order  => '02',
   }
   concat::fragment {'99_rc.local_footer':
