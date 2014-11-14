@@ -42,7 +42,6 @@ node default {
   include ssh
   include user
   include nginx
-  include uwsgi
   class { 'postgresql::server': }
 
   postgresql::server::role { 'openrave':
@@ -50,7 +49,7 @@ node default {
     createdb      => true,
     createrole    => true,
     superuser     => true,
-    inherit	  => true,
+    inherit	      => true,
     login         => true,
   }
   postgresql::server::db { 'openrave_website':
@@ -125,11 +124,16 @@ node default {
     owner  => "${localuser}",
     group  => "${localgroup}"
   }
-  uwsgi::siteconfig{'openrave_uwsgi.ini':
-    content => "# openrave_uwsgi.ini file\n[uwsgi]\n\n# Django-related settings\nchdir = ${deploydir}/openrave_org/\nmodule          = openrave_org.wsgi\nhome            = ${deploydir}/venv\n\n# process-related settings\nmaster          = true\nprocesses       = 10\nsocket          = ${deploydir}/openrave_org_uwsgi.sock\nchmod-socket    = 664\nuid             = ${localuser}\ngid             = ${localgroup}\ndaemonize       = ${deploydir}/uwsgi_error.log\n\n# clear environment on exit\nvacuum          = true",
+  
+  class {'uwsgi':
     owner  => "${localuser}",
     group  => "${localgroup}",
-    directory => "${openraveorg_deploydir}/vassals",
+    inidir => "${openraveorg_deploydir}/vassals",
+  }
+  uwsgi::siteconfig{'openrave_uwsgi.ini':
+    content => "# openrave_uwsgi.ini file\n[uwsgi]\n\n# Django-related settings\nchdir = ${deploydir}/openrave_org/\nmodule = openrave_org.wsgi\nhome = ${deploydir}/venv\n\n# process-related settings\nmaster = true\nprocesses = 10\nsocket = ${deploydir}/openrave_org_uwsgi.sock\nchmod-socket = 664\nuid = ${localuser}\ngid = ${localgroup}\ndaemonize = ${deploydir}/uwsgi_error.log\n\n# clear environment on exit\nvacuum = true",
+    owner  => "${localuser}",
+    group  => "${localgroup}",
   }
 }
 
