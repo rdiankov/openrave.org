@@ -13,7 +13,7 @@ class uwsgi ($owner='www-data',$group='www-data') {
 
 define uwsgi::install($owner,$group) {
   python::pip {'uwsgi':
-    pkgname => 'uwsgi',
+    pkgname => 'uwsgi', 
   }
 
   file {"/etc/uwsgi":
