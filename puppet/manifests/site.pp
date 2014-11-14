@@ -19,7 +19,7 @@
 
 # Define filebucket 'main':
 filebucket { 'main':
-  server => 'puppetmaster',
+  server => 'localhost',
   path   => false,
 }
 
