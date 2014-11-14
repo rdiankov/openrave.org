@@ -91,7 +91,7 @@ node default {
     group => "${localgroup}",
     #mode => 0644, 
   }~>
-  file {'${openraveorg_deploydir}/openrave_org':
+  file {"${openraveorg_deploydir}/openrave_org":
     ensure  => directory,
     owner   => "${localuser}",
     group   => "${localgroup}",
