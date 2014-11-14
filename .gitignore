@@ -1,6 +1,6 @@
 openrave_org/media/
 openrave_org/docdata/
-openrave_org/docdata
+openrave_org_migrations/
 *.pyc
 *.o
 openrave_org/openrave_org/docs/migrations/*.py*
