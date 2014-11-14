@@ -121,7 +121,7 @@ node default {
   class {'nginx':
     owner       => "${localuser}",
     group       => "${localgroup}",
-    confcontent => "# openrave_nginx.conf\nupstream django { server unix:///var/openrave/openrave_org_wsgi.sock; }\nserver {\nlisten 80;\nserver_name localhost;\ncharset utf-8;\nerror_log /var/log/nginx/openrave_error.log;\naccess_log /var/log/nginx/openrave_access.log;\nclient_max_body_size 75M;\nlocation /media  { alias /var/openrave/openrave_org/media; }\nlocation /static { alias /var/openrave/openrave_org/openrave_org/static; }\nlocation /s { alias /var/openrave/openrave_org/openrave_org/static; }\nlocation / { uwsgi_pass  django; include /etc/nginx/uwsgi_params; }\n}",
+    confcontent => "# openrave_nginx.conf\nupstream django { server unix://${openraveorg_deploydir}/openrave_org_wsgi.sock; }\nserver {\nlisten 80;\nserver_name localhost;\ncharset utf-8;\nerror_log /var/log/nginx/openrave_error.log;\naccess_log /var/log/nginx/openrave_access.log;\nclient_max_body_size 75M;\nlocation /media  { alias ${openraveorg_deploydir}/openrave_org/media; }\nlocation /static { alias ${openraveorg_deploydir}/openrave_org/openrave_org/static; }\nlocation /s { alias ${openraveorg_deploydir}/openrave_org/openrave_org/static; }\nlocation / { uwsgi_pass  django; include /etc/nginx/uwsgi_params; }\n}",
   }
   
   class {'uwsgi':
