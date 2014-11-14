@@ -100,6 +100,10 @@ Facter
 
     facter apply  --verbose --no-listen --no-daemonize --onetime --no-splay --test --pluginsync
 
+  "--noop" is a dry run
+  ::
+    sudo -E puppet apply --confdir $FACTER_openraveorg_deploydir/puppet $FACTER_openraveorg_deploydir/puppet/manifests/site.pp --test --debug --noop
+    
     puppet config print all
     puppet config print modulepath
 Creating PostgreSQL Database
