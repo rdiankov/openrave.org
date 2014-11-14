@@ -54,10 +54,8 @@ Setup documentation
 
 3. Load documents
 ::
-
-   scp www-data@128.199.207.239:/var/opraveorg-tmp/docdata.tar.gz docdata.tar.gz
-   tar -vxzf docdata.tar.gz
-   rm docdata.tar.gz
+   add docdata zip files
+   
    ./manage.py update_docs
 
 4. Re-index the documents:
