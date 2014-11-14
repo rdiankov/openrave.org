@@ -44,7 +44,7 @@ Setup documentation
 
   cd $FACTER_openraveorg_deploydir/openrave_org
   source ../venv/bin/activate
-  ./manage.py makemigrations
+  ./manage.py makemigrations <app name here>
   ./manage.py migrate
 
 2. Load fixtures
@@ -54,10 +54,8 @@ Setup documentation
 
 3. Load documents
 ::
-
-   scp www-data@128.199.207.239:/var/opraveorg-tmp/docdata.tar.gz docdata.tar.gz
-   tar -vxzf docdata.tar.gz
-   rm docdata.tar.gz
+   add docdata zip files
+   
    ./manage.py update_docs
 
 4. Re-index the documents:
@@ -109,7 +107,8 @@ Puppet help
   puppet config print all
   
   puppet config print modulepath
-
+  
+  --verbose --debug --trace
 
 Creating PostgreSQL Database
 ---------------------

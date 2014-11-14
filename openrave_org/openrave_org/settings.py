@@ -48,7 +48,7 @@ DATABASES = {
 }
 
 #move migrations
-#MIGRATION_MODULES = {'docs':'openrave_org_migrations'}
+MIGRATION_MODULES = {'docs':'openrave_org_migrations'}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
