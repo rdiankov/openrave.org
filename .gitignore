@@ -14,3 +14,5 @@ puppet/puppet.conf
 puppet/puppetdb.conf
 puppet/routes.yaml
 puppet/modules/vcsrepo/
+vassals/
+venv/

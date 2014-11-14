@@ -3,16 +3,17 @@
 # installs uwsgi package
 # and sets the config file
 #
-class uwsgi ($owner='www-data',$group='www-data',$inidir='/etc/uwsgi') {
+class uwsgi ($owner='www-data',$group='www-data',$inidir='/etc/uwsgi',$inicontent) {
   include uwsgi::service
   uwsgi::install{'install-uwsgi':
     owner => $owner,
     group => $group,
     inidir => $inidir,
+    inicontent => $inicontent,
   }
 }
 
-define uwsgi::install($owner,$group,$inidir) {
+define uwsgi::install($owner,$group,$inidir,$inicontent) {
   python::pip {'uwsgi':
     pkgname => 'uwsgi', 
   }
@@ -21,6 +22,14 @@ define uwsgi::install($owner,$group,$inidir) {
     ensure => directory,
     owner => $owner,
     group => $group,
+  }~>
+  file {"$inidir/uwsgi.ini":
+    ensure  => present,
+    content => $inicontent,
+    owner   => $owner,
+    group   => $group,
+    mode    => 0644,
+    notify  => Class["uwsgi::service"],
   }
   file {'/var/log/uwsgi':
     ensure => directory,

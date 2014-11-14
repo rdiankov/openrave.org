@@ -129,11 +129,7 @@ node default {
     owner  => "${localuser}",
     group  => "${localgroup}",
     inidir => "${openraveorg_deploydir}/vassals",
-  }
-  uwsgi::siteconfig{'openrave_uwsgi.ini':
-    content => "# openrave_uwsgi.ini file\n[uwsgi]\n\n# Django-related settings\nchdir = ${deploydir}/openrave_org/\nmodule = openrave_org.wsgi\nhome = ${deploydir}/venv\n\n# process-related settings\nmaster = true\nprocesses = 10\nsocket = ${deploydir}/openrave_org_uwsgi.sock\nchmod-socket = 664\nuid = ${localuser}\ngid = ${localgroup}\ndaemonize = ${deploydir}/uwsgi_error.log\n\n# clear environment on exit\nvacuum = true",
-    owner  => "${localuser}",
-    group  => "${localgroup}",
+    inicontent => "# openrave_uwsgi.ini file\n[uwsgi]\n\n# Django-related settings\nchdir = ${deploydir}/openrave_org/\nmodule = openrave_org.wsgi\nhome = ${deploydir}/venv\n\n# process-related settings\nmaster = true\nprocesses = 10\nsocket = ${deploydir}/openrave_org_uwsgi.sock\nchmod-socket = 664\nuid = ${localuser}\ngid = ${localgroup}\ndaemonize = ${deploydir}/uwsgi_error.log\n\n# clear environment on exit\nvacuum = true",
   }
 }
 
