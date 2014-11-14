@@ -53,9 +53,9 @@ Setup documentation
    ./manage.py loaddata doc_releases.json
 
 3. Load documents
+Make sure you add the docdata directory with zip files before updating docs.
 ::
-   add docdata zip files
-   
+
    ./manage.py update_docs
 
 4. Re-index the documents:
