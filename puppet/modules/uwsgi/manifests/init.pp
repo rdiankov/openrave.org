@@ -22,7 +22,6 @@ define uwsgi::install($owner,$group,$inidir,$inicontent) {
     ensure => directory,
     owner => $owner,
     group => $group,
-    backup  => false,
   }~>
   file {"$inidir/uwsgi.ini":
     ensure  => present,
@@ -31,14 +30,12 @@ define uwsgi::install($owner,$group,$inidir,$inicontent) {
     group   => $group,
     mode    => 0644,
     notify  => Class["uwsgi::service"],
-    backup  => false,
   }
   file {"$inidir/uwsgi":
     ensure => directory,
     owner  => $owner,
     group  => $group,
     mode   => 0644,
-    backup  => false,
   }
 
   concat {"/etc/rc.local":

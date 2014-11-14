@@ -77,6 +77,8 @@ node default {
     ensure => directory,
     owner   => "${localuser}",
     group   => "${localgroup}",
+    recurse => true,
+    ignore  => '*.sock',
   }~>
   file {"${openraveorg_deploydir}/openrave_org_migrations":
     ensure => directory,
@@ -97,9 +99,9 @@ node default {
     recurse => true,
     ignore  => '*.sock',
   }
-  
+ e
   class { 'python':
-    version    => 'system',
+    versgnore  => '*.sock',ion    => 'system',
     pip        => true,
     dev        => true,
     virtualenv => true,
