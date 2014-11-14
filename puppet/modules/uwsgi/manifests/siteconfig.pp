@@ -1,7 +1,7 @@
-define uwsgi::siteconfig($source,$owner,$group){
-  file {"/etc/uwsgi/vassals/$name":
+define uwsgi::siteconfig($content,$directory,$owner,$group){
+  file {"$directory/$name":
     ensure  => present,
-    source  => $source,
+    content => $content,
     owner   => $owner,
     group   => $group,
     mode    => 0644,
