@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Rosen Diankov <rosen.diankov@gmail.com>
+# Copyright (C) 2014 Clayton Auzenne <cauzenne@mujin.co.jp>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,9 +37,6 @@ ADMINS = ( ('OpenRAVE Development', 'openrave.testing@gmail.com'), ('Rosen Diank
 MANAGERS = ADMINS
 FEED_APPROVERS_GROUP_NAME = "feed-approver"
 
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -51,8 +48,7 @@ DATABASES = {
 }
 
 #move migrations
-MIGRATION_MODULES = {'docs':'openrave_org_migrations'}
-
+#MIGRATION_MODULES = {'docs':'openrave_org_migrations'}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -172,11 +168,6 @@ ACCOUNT_ACTIVATION_DAYS = 3
 
 # setting for documentation root path
 OPENRAVE_DOCUMENT_ROOT_PATH = os.path.join(ROOT_PATH,'..','docdata')
-
-# Haystack settings
-#HAYSTACK_SITECONF = 'openrave_website.docs.search_sites'
-#HAYSTACK_SEARCH_ENGINE = 'whoosh'
-#HAYSTACK_WHOOSH_PATH = os.path.join(OPENRAVE_DOCUMENT_ROOT_PATH,'openravedocs.index')
 
 HAYSTACK_CONNECTIONS = {
     'default': {
