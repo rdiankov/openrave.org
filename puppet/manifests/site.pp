@@ -23,9 +23,6 @@ filebucket { 'main':
   path   => false,
 }
 
-
-
-
 # Make filebucket 'main' the default backup location for all File resources:
 File { backup => 'main' }
 
@@ -75,8 +72,7 @@ node default {
 #    password   => '$1$963viJj/$VUiSdG/Sjsj4bsQD1uXTX0',
 #    groups     => '$localuser',
 #    sshkeytype => 'ssh-rsa',
-#    sshkey     => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC8EmeGfKH2vIfoGzaBOJUuns6SoYUdvouXqETChF/tzlcTMfKFdvsHUCJMDs8h3WnEiIwqWTSlyIKVYYvsI6EXPu94lILh4Dg668oaTl34YAw1h0GLAEBgjQXlSNRbm6jVvsHeEUHbtvr5VcSyKDFGbfkpp2Cz7iOzi8G2IjXLqiP6VZcVuo12CBlJgNaeke8TvL0soFcFa9aWRPa/tp/NApgj5fafKlC6TUdqh7j/ZbcyKh+flOGtcWzFCt7R6KkbEJZUc4L5a/hwO4iMEWWHMwI6ANWYDXEW2qLA4H8mVrvgm3PfFdPsOQlTSZIiGRqQLrf3sDUgHUOqdW8eges3',
-#    #sshkey     => '' #ssh public key without type and user indicators  
+#    sshkey     => '' #ssh public key without type and user indicators  
 #}
 
   file {"${openraveorg_deploydir}":
@@ -95,6 +91,15 @@ node default {
     group => "${localgroup}",
     #mode => 0644, 
   }~>
+  file {"${openraveorg_deploydir}/openrave_org":
+    ensure  => directory,
+    owner   => "${localuser}",
+    group   => "${localgroup}",
+    #mode    => 0774,
+    recurse => true,
+    ignore  => '*.sock',
+  }
+  
   class { 'python':
     version    => 'system',
     pip        => true,
