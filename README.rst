@@ -42,7 +42,7 @@ Setup documentation
 1. Go into the website directory and activate the virtual environment, then migrate with Django
 ::
 
-  cd $FACTER_openraveorg_sitedir
+  cd $FACTER_openraveorg_deploydir/openrave_org
   source ../venv/bin/activate
   ./manage.py makemigrations
   ./manage.py migrate
