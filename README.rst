@@ -109,7 +109,8 @@ Puppet help
   puppet config print all
   
   puppet config print modulepath
-
+  
+  --verbose --debug --trace
 
 Creating PostgreSQL Database
 ---------------------
