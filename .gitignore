@@ -1,6 +1,7 @@
 openrave_org/media/
 openrave_org/docdata/
 openrave_org/docdata
+uwsgi_error.log
 *.pyc
 *.o
 openrave_org/openrave_org/docs/migrations/*.py*
