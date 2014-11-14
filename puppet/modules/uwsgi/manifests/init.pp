@@ -3,7 +3,7 @@
 # installs uwsgi package
 # and sets the config file
 #
-class uwsgi ($owner='www-data',$group='www-data') {
+class uwsgi ($owner='www-data',$group='www-data',$inidir='/etc/uwsgi') {
   include uwsgi::service
   uwsgi::install{'install-uwsgi':
     owner => $owner,
@@ -45,7 +45,7 @@ define uwsgi::install($owner,$group) {
   }
   concat::fragment {'02_rc.local_custom':
     target => '/etc/rc.local',
-    source => 'puppet:///modules/uwsgi/run_uwsgi.sh',
+    content => "/usr/local/bin/uwsgi --emperor ${deploydir}/vassals --uid ${localuser} --gid ${localgroup}\n",
     order  => '02',
   }
   concat::fragment {'99_rc.local_footer':
