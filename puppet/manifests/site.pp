@@ -78,17 +78,17 @@ node default {
     owner   => "${localuser}",
     group   => "${localgroup}",
   }~>
-  #file {"${openraveorg_deploydir}/openrave_org_migrations":
-  #  ensure => directory,
-  #  owner   => "${localuser}",
-  #  group   => "${localgroup}",
-  #}~>
-  #file {"${openraveorg_deploydir}/openrave_org_migrations/__init__.py": 
-  #  ensure => present, 
-  #  owner => "${localuser}", 
-  #  group => "${localgroup}",
-  #  #mode => 0644, 
-  #}~>
+  file {"${openraveorg_deploydir}/openrave_org_migrations":
+    ensure => directory,
+    owner   => "${localuser}",
+    group   => "${localgroup}",
+  }~>
+  file {"${openraveorg_deploydir}/openrave_org_migrations/__init__.py": 
+    ensure => present, 
+    owner => "${localuser}", 
+    group => "${localgroup}",
+    #mode => 0644, 
+  }~>
   file {"${openraveorg_deploydir}/openrave_org":
     ensure  => directory,
     owner   => "${localuser}",
