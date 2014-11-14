@@ -104,8 +104,13 @@ Facter
   ::
     sudo -E puppet apply --confdir $FACTER_openraveorg_deploydir/puppet $FACTER_openraveorg_deploydir/puppet/manifests/site.pp --test --debug --noop
     
-    puppet config print all
-    puppet config print modulepath
+Puppet help
+  
+  puppet config print all
+  
+  puppet config print modulepath
+
+
 Creating PostgreSQL Database
 ---------------------
 If you need to setup the database manually
