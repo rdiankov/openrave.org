@@ -46,7 +46,7 @@ Setup documentation
 
   cd $FACTER_openraveorg_deploydir/openrave_org
   source ../venv/bin/activate
-  ./manage.py makemigrations <app name here>
+  ./manage.py makemigrations docs
   ./manage.py migrate
 
 2. Load fixtures
