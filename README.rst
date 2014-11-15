@@ -8,16 +8,19 @@ First, install puppet.  For Debian Wheezy, use the following steps:
 
 ::
 
-  export FACTER_localuser=$USER
-  export FACTER_localgroup=$USER
-  export FACTER_openraveorg_gitdir=`pwd`
-  export FACTER_openraveorg_deploydir=`pwd`
-  export FACTER_openraveorg_sitedir="$FACTER_openraveorg_deploydir/openrave_org"
   wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
   dpkg -i puppetlabs-release-precise.deb
   apt-get update
   apt-get install puppet
 
+Create environment variables from inside the working directory you want to clone into.
+::
+
+  export FACTER_localuser=$USER
+  export FACTER_localgroup=$USER
+  export FACTER_openraveorg_gitdir=`pwd`
+  export FACTER_openraveorg_deploydir=`pwd`
+  export FACTER_openraveorg_sitedir="$FACTER_openraveorg_deploydir/openrave_org"
 
 Clone Repo
 ------------------
