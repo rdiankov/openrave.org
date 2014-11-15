@@ -28,7 +28,6 @@ Once puppet is installed, the following commands will clone this repo into your 
 
 ::
 
-  mkdir -p $FACTER_openraveorg_gitdir
   git clone https://github.com/rdiankov/openrave.org.git --branch django1.7 $FACTER_openraveorg_gitdir
 
 Apply Puppet
