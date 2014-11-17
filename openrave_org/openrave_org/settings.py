@@ -78,7 +78,7 @@ TEMPLATE_DEBUG = DEBUG
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = "noreply@openrave.org"
 
-MEDIA_ROOT = os.path.join(ROOT_PATH,'..','media/')
+MEDIA_ROOT = os.path.join(os.environ['FACTER_openraveorg_deploydir'],'media/')
 MEDIA_URL = '/m/'
 
 STATIC_ROOT = 'static/'
@@ -169,7 +169,7 @@ ACCOUNT_ACTIVATION_DAYS = 3
 #AKISMET_API_KEY = "?"
 
 # setting for documentation root path
-OPENRAVE_DOCUMENT_ROOT_PATH = os.path.join(ROOT_PATH,'..','docdata')
+OPENRAVE_DOCUMENT_ROOT_PATH = os.path.join(os.environ['FACTER_openraveorg_deploydir'],'docdata')
 
 HAYSTACK_CONNECTIONS = {
     'default': {

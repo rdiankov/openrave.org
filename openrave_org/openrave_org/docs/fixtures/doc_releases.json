@@ -5,8 +5,8 @@
     "fields": {
       "lang": "en",
       "version": "latest_stable",
-      "scm": "svn",
-      "scm_url": "https://openrave.svn.sourceforge.net/svnroot/openrave/latest_stable",
+      "scm": "git",
+      "scm_url": "https://github.com/rdiankov/openrave.git",
       "is_default": true
     }
   },
@@ -16,8 +16,8 @@
     "fields": {
       "lang": "ja",
       "version": "latest_stable",
-      "scm": "svn",
-      "scm_url": "https://openrave.svn.sourceforge.net/svnroot/openrave/latest_stable",
+      "scm": "git",
+      "scm_url": "https://github.com/rdiankov/openrave.git",
       "is_default": false
     }
   }

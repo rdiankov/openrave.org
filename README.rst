@@ -61,67 +61,78 @@ Setup documentation
 
    cd $FACTER_openraveorg_gitdir/openrave_org; ./manage.py loaddata doc_releases.json
 
-3. Load documents
-Make sure you add the docdata directory with zip files before updating docs.
-::
-
+3. Load documents. Make sure you add the docdata directory with zip files before updating docs::
+   
    ./manage.py update_docs
 
-4. Re-index the documents:
-::
+4. Re-index the documents::
 
    ./manage.py update_index
 
+5. Run django manually to test if all data is present::
+
+  ./manage.py runserver
 
 Update permissions and restart
 --------------------------
+
 Run puppet apply command to update permissions for documents
-::
+
+.. code-block:: bash
 
    deactivate
    puppet apply --confdir $FACTER_openraveorg_deploydir/puppet $FACTER_openraveorg_deploydir/puppet/manifests/site.pp
-   init 6
-
+   sudo service uwsgi restart
+   sudo service nginx restart
 
 Visit site at port :80
 
-Notes
-=========================
+Deployment Notes
+================
+
 These instructions are for installing OpenRave.org code in a standalone environment.  This library can be used in a puppet master setup, however the default path of the puppet installation would be /etc/puppetlabs/puppet.  Documentation for running a separate puppet master server can be found here: https://docs.puppetlabs.com/pe/latest/install_basic.html
 
 Help
-====================
-For adding new document:
-::
+====
+
+For adding new document.
+
+.. code-block:: bash
  
     export OPENRAVE_VERSION=0.8.0
     export DOC_LANG=en
     DJANGO_SETTINGS_MODULE=openrave_org.settings python -c "from openrave_org.docs import models; models.DocumentRelease.objects.create(lang='$DOC_LANG',version='$OPENRAVE_VERSION', scm=models.DocumentRelease.GIT, scm_url='https://github.com/rdiankov/openrave/tree/v$OPENRAVE_VERSION', is_default=False);"
 
-Facter
-================  
+Debugging Notes
+===============
+
+ Facter Notes
+-------------
+
+.. code-block:: bash
 
     facter -p  #See if your evn vars are set
-
+    
     facter apply --test
-
+    
     facter apply  --verbose --no-listen --no-daemonize --onetime --no-splay --test --pluginsync
 
-  "--noop" is a dry run
-  ::
+"--noop" is a dry run::
+
     sudo -E puppet apply --confdir $FACTER_openraveorg_deploydir/puppet $FACTER_openraveorg_deploydir/puppet/manifests/site.pp --test --debug --noop
     
-Puppet help
+Puppet help::
   
   puppet config print all
-  
   puppet config print modulepath
   
   --verbose --debug --trace
 
 Creating PostgreSQL Database
----------------------
+----------------------------
+
 If you need to setup the database manually
+
 .. code-block:: bash
 
   sudo -u postgres psql --command "CREATE ROLE openrave PASSWORD 'testpass' SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;"
