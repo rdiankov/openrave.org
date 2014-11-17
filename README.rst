@@ -36,23 +36,30 @@ Running puppet apply, will apply the manifest in a standalone setup.  Documentat
 
 ::
 
-  puppet apply --confdir $FACTER_openraveorg_deploydir/puppet $FACTER_openraveorg_deploydir/puppet/manifests/site.pp
+  sudo -E puppet apply --confdir $FACTER_openraveorg_gitdir/puppet $FACTER_openraveorg_gitdir/puppet/manifests/site.pp
+
+
+Edit the openrave.org_secrets.json file in the deploy directoy, containing something like:
+
+::
+
+  { "secret_key": "xyz",
+    "superfeedr_creds": ["any@email.com", "some_string"] }
 
 
 Setup documentation
 ------------------
-1. Go into the website directory and activate the virtual environment, then migrate with Django
+1. Go into the website directory and activate the virtual environment, then migrate with Django. This will set OPENRAVEORG_DEPLOYDIR environment variable.
 ::
 
-  cd $FACTER_openraveorg_deploydir/openrave_org
-  source ../venv/bin/activate
-  ./manage.py makemigrations docs
-  ./manage.py migrate
+  source $FACTER_openraveorg_deploydir/setup.bash
+  cd $FACTER_openraveorg_gitdir/openrave_org; ./manage.py makemigrations docs
+  cd $FACTER_openraveorg_gitdir/openrave_org; ./manage.py migrate
 
 2. Load fixtures
 ::
 
-   ./manage.py loaddata doc_releases.json
+   cd $FACTER_openraveorg_gitdir/openrave_org; ./manage.py loaddata doc_releases.json
 
 3. Load documents
 Make sure you add the docdata directory with zip files before updating docs.

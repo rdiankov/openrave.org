@@ -24,10 +24,12 @@ except KeyError:
     OPENRAVEORG_ENV = 'dev'
 
 # It's a secret to everybody
-if OPENRAVEORG_ENV=='production':
-    SECRETS = json.load(open('/var/openrave.org_secrets.json'))
-else:
-    SECRETS = json.load(open(os.path.join(ROOT_PATH,'..','openrave.org_secrets.json')))
+#if OPENRAVEORG_ENV=='production':
+#    SECRETS = json.load(open('/var/openrave.org_secrets.json'))
+#else:
+#    SECRETS = json.load(open(os.path.join(ROOT_PATH,'..','openrave.org_secrets.json')))
+
+SECRETS = json.load(open(os.path.join(os.environ['FACTER_openraveorg_deploydir'],'openrave.org_secrets.json')))
     
 SECRET_KEY = str(SECRETS['secret_key'])
 # SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
