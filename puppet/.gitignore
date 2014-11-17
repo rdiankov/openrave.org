@@ -1,8 +1,6 @@
 ssl/
 auth.conf
 console.conf
-fileserver.conf
-hiera.yaml
 puppet.conf
 puppetdb.conf
 routes.yaml

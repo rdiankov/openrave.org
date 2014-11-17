@@ -48,7 +48,7 @@ node default {
     createdb      => true,
     createrole    => true,
     superuser     => true,
-    inherit	      => true,
+    inherit	  => true,
     login         => true,
   }
   postgresql::server::db { 'openrave_website':
@@ -74,23 +74,31 @@ node default {
 #}
 
   file {"${openraveorg_deploydir}":
-    ensure => directory,
+    ensure  => directory,
     owner   => "${localuser}",
     group   => "${localgroup}",
     recurse => true,
     ignore  => '*.sock',
-  }~>
-  file {"${openraveorg_deploydir}/openrave_org_migrations":
-    ensure => directory,
+  }
+  file {"${openraveorg_deploydir}/openrave.org_secrets.json":
+    ensure  => present,
     owner   => "${localuser}",
     group   => "${localgroup}",
+    source  => 'puppet:///modules/openraveorg/openrave.org_secrets.json',
+    require => File["${openraveorg_deploydir}"],
+  }
+  file {"${openraveorg_deploydir}/openrave_org_migrations":
+    ensure => directory,
+    owner  => "${localuser}",
+    group  => "${localgroup}",
+    require => File["${openraveorg_deploydir}"],
   }~>
   file {"${openraveorg_deploydir}/openrave_org_migrations/__init__.py": 
     ensure => present, 
     owner => "${localuser}", 
     group => "${localgroup}",
     #mode => 0644, 
-  }~>
+  }
   file {"${openraveorg_deploydir}/openrave_org":
     ensure  => directory,
     owner   => "${localuser}",
@@ -98,6 +106,7 @@ node default {
     #mode    => 0774,
     recurse => true,
     ignore  => '*.sock',
+    require => File["${openraveorg_deploydir}"],
   }
  
   class { 'python':
