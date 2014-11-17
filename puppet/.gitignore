@@ -1,7 +1,0 @@
-ssl/
-auth.conf
-console.conf
-puppet.conf
-puppetdb.conf
-routes.yaml
-modules/vcsrepo/
