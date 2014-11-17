@@ -87,6 +87,13 @@ node default {
     source  => 'puppet:///modules/openraveorg/openrave.org_secrets.json',
     require => File["${openraveorg_deploydir}"],
   }
+  file {"${openraveorg_deploydir}/setup.bash":
+    ensure  => present,
+    owner   => "${localuser}",
+    group   => "${localgroup}",
+    content => "#!/bin/bash\nexport FACTER_openraveorg_deploydir=${openraveorg_deploydir}\nexport FACTER_openraveorg_gitdir=${openraveorg_gitdir}\nsource ${openraveorg_deploydir}/venv/bin/activate\n",
+    require => File["${openraveorg_deploydir}"],
+  }
   file {"${openraveorg_deploydir}/openrave_org_migrations":
     ensure => directory,
     owner  => "${localuser}",
