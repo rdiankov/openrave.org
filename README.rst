@@ -149,3 +149,41 @@ systemd is shipped as a technology preview in Debian 7.0. For more information o
 
 /boot/grub/grub.cfg:
 add boot option with  init=/bin/systemd
+
+Mini script to convert latest_stable docdata to a specific version:
+
+  .. code-block:: bash
+  
+    export OPENRAVE_VERSION=0.8.0
+    unzip openravejson-latest_stable.zip
+    mv openravejson-latest_stable openravejson-$OPENRAVE_VERSION
+    zip -r openravejson-$OPENRAVE_VERSION.zip openravejson-$OPENRAVE_VERSION
+    unzip openravehtml-latest_stable.zip
+    mv openravehtml-latest_stable openravehtml-$OPENRAVE_VERSION
+    zip -r openravehtml-$OPENRAVE_VERSION.zip openravehtml-$OPENRAVE_VERSION
+
+Internationalization. For Japanese, edit **locale/ja_JP/LC_MESSAGES/django.po** file::
+
+    django-admin.py makemessages --locale=ja_JP
+    django-admin.py compilemessages --locale=ja_JP
+
+For deployment checkout fabfile.py::
+
+    https://openrave.svn.sourceforge.net/svnroot/openrave/openrave.org/fabfile.py
+
+Translating to Japanese
+=======================
+
+When English templates are done, execute:
+
+.. code-block:: bash
+
+  django-admin.py makemessages --locale=ja_JP
+
+Open **locale/ja_JP/LC_MESSAGES/django.po** and edit the translations. When done execute:
+
+.. code-block:: bash
+
+  django-admin.py compilemessages --locale=ja_JP
+
+
