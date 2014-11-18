@@ -152,7 +152,7 @@ node default {
     owner  => "${localuser}",
     group  => "${localgroup}",
     inidir => "${openraveorg_deploydir}/vassals",
-    inicontent => "# openrave_uwsgi.ini file\n[uwsgi]\n\n# Django-related settings\nchdir = ${openraveorg_deploydir}/openrave_org/\nmodule = openrave_org.wsgi\nhome = ${openraveorg_deploydir}/venv\n\n# process-related settings\nmaster = true\nprocesses = 10\nsocket = ${openraveorg_deploydir}/openrave_org_wsgi.sock\nchmod-socket = 664\nuid = ${localuser}\ngid = ${localgroup}\ndaemonize = ${openraveorg_deploydir}/uwsgi_error.log\n\n# clear environment on exit\nvacuum = true",
+    inicontent => "# openrave_uwsgi.ini file\n[uwsgi]\n\n# Django-related settings\nchdir = ${openraveorg_gitdir}/openrave_org/\nmodule = openrave_org.wsgi\nhome = ${openraveorg_deploydir}/venv\n\n# process-related settings\nmaster = true\nprocesses = 10\nsocket = ${openraveorg_deploydir}/openrave_org_wsgi.sock\nchmod-socket = 664\nuid = ${localuser}\ngid = ${localgroup}\ndaemonize = ${openraveorg_deploydir}/uwsgi_error.log\n\n# clear environment on exit\nvacuum = true",
   }
 }
 
