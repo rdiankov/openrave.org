@@ -138,17 +138,6 @@ If you need to setup the database manually
   sudo -u postgres psql --command "CREATE ROLE openrave PASSWORD 'testpass' SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;"
   createdb --host localhost --username openrave --encoding UTF-8 openrave_website
 
-Systemd
--------
-::
-
-2.3.4. systemd
-Debian 7.0 introduces preliminary support for systemd, an init system with advanced monitoring, logging and service management capabilities.
-While it is designed as a drop-in sysvinit replacement and as such makes use of existing SysV init scripts, the systemd package can be installed safely alongside sysvinit and started via the init=/bin/systemd kernel option. To utilize the features provided by systemd, about 50 packages already provide native support, among them core packages like udev, dbus and rsyslog.
-systemd is shipped as a technology preview in Debian 7.0. For more information on this topic, see the Debian wiki. 
-
-/boot/grub/grub.cfg:
-add boot option with  init=/bin/systemd
 
 Mini script to convert latest_stable docdata to a specific version:
 
@@ -187,3 +176,14 @@ Open **locale/ja_JP/LC_MESSAGES/django.po** and edit the translations. When done
   django-admin.py compilemessages --locale=ja_JP
 
 
+Systemd
+-------
+::
+
+2.3.4. systemd
+Debian 7.0 introduces preliminary support for systemd, an init system with advanced monitoring, logging and service management capabilities.
+While it is designed as a drop-in sysvinit replacement and as such makes use of existing SysV init scripts, the systemd package can be installed safely alongside sysvinit and started via the init=/bin/systemd kernel option. To utilize the features provided by systemd, about 50 packages already provide native support, among them core packages like udev, dbus and rsyslog.
+systemd is shipped as a technology preview in Debian 7.0. For more information on this topic, see the Debian wiki. 
+
+/boot/grub/grub.cfg:
+add boot option with  init=/bin/systemd
