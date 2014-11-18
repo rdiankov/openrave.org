@@ -94,6 +94,12 @@ node default {
     content => "#!/bin/bash\nexport FACTER_openraveorg_deploydir=${openraveorg_deploydir}\nexport FACTER_openraveorg_gitdir=${openraveorg_gitdir}\nsource ${openraveorg_deploydir}/venv/bin/activate\n",
     require => File["${openraveorg_deploydir}"],
   }
+  file {"${openraveorg_deploydir}/docdata":
+    ensure => directory,
+    owner  => "${localuser}",
+    group  => "${localgroup}",
+    require => File["${openraveorg_deploydir}"],
+  }~>
   file {"${openraveorg_deploydir}/openrave_org_migrations":
     ensure => directory,
     owner  => "${localuser}",
