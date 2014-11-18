@@ -18,8 +18,8 @@ Create environment variables from inside the working directory you want to clone
 
   export FACTER_localuser=$USER
   export FACTER_localgroup=$USER
-  export FACTER_openraveorg_gitdir=`pwd`
-  export FACTER_openraveorg_deploydir=`pwd`
+  export FACTER_openraveorg_gitdir=`pwd`/openrave.org
+  export FACTER_openraveorg_deploydir=`pwd`/openrave.org
   export FACTER_openraveorg_sitedir="$FACTER_openraveorg_deploydir/openrave_org"
 
 Clone Repo
