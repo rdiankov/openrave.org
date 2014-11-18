@@ -187,3 +187,6 @@ systemd is shipped as a technology preview in Debian 7.0. For more information o
 
 /boot/grub/grub.cfg:
 add boot option with  init=/bin/systemd
+
+
+--- Using system similar to djangoproject.com ---
