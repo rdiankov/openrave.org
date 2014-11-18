@@ -1,5 +1,8 @@
-Managing OpenRave.org
-=================
+Managing openrave.org
+=====================
+
+These instructions are for installing OpenRave.org code in a standalone environment.  This library can be used in a puppet master setup, however the default path of the puppet installation would be /etc/puppetlabs/puppet.  Documentation for running a separate puppet master server can be found here: https://docs.puppetlabs.com/pe/latest/install_basic.html
+
 The code in this repository is modified from https://github.com/rdiankov/openrave.org, updated to work with Django 1.7 and Postgres 9.1. openrave.org uses Django for managing documentation, news, and blogs, similar to `djangoproject.com <https://github.com/django/djangoproject.com>`_
 
 Install Puppet
@@ -61,7 +64,21 @@ Setup documentation
 
    cd $FACTER_openraveorg_gitdir/openrave_org; ./manage.py loaddata doc_releases.json
 
-3. Load documents. Make sure you add the docdata directory with zip files before updating docs::
+3. Load documents. Make sure to add openrave documentation html and json zip files (generated via http://openrave.org/docs/latest_stable/devel/documentation_system/) to::
+
+  cp openravehtml-latest_stable.zip $FACTER_openraveorg_deploydir/docdata/
+  cp openravejson-latest_stable.zip $FACTER_openraveorg_deploydir/docdata/
+  
+Then register the document version via
+
+.. code-block:: bash
+ 
+    cd $FACTER_openraveorg_gitdir/openrave_org
+    export OPENRAVE_VERSION=latest_stable
+    export DOC_LANG=en
+    DJANGO_SETTINGS_MODULE=openrave_org.settings python -c "from openrave_org.docs import models; models.DocumentRelease.objects.create(lang='$DOC_LANG',version='$OPENRAVE_VERSION', scm=models.DocumentRelease.GIT, scm_url='https://github.com/rdiankov/openrave/tree/v$OPENRAVE_VERSION', is_default=False);"
+
+  Then can updating docs using::
    
    ./manage.py update_docs
 
@@ -76,32 +93,16 @@ Setup documentation
 Update permissions and restart
 --------------------------
 
-Run puppet apply command to update permissions for documents
+Run puppet apply command to update permissions for documents.
+Note that uwsgi is set to run from /etc/rc.local
 
 .. code-block:: bash
 
    deactivate
-   puppet apply --confdir $FACTER_openraveorg_deploydir/puppet $FACTER_openraveorg_deploydir/puppet/manifests/site.pp
-   sudo service uwsgi restart
+   sudo -E puppet apply --confdir $FACTER_openraveorg_gitdir/puppet $FACTER_openraveorg_gitdir/puppet/manifests/site.pp
    sudo service nginx restart
 
 Visit site at port :80
-
-Deployment Notes
-================
-
-These instructions are for installing OpenRave.org code in a standalone environment.  This library can be used in a puppet master setup, however the default path of the puppet installation would be /etc/puppetlabs/puppet.  Documentation for running a separate puppet master server can be found here: https://docs.puppetlabs.com/pe/latest/install_basic.html
-
-Help
-====
-
-For adding new document.
-
-.. code-block:: bash
- 
-    export OPENRAVE_VERSION=0.8.0
-    export DOC_LANG=en
-    DJANGO_SETTINGS_MODULE=openrave_org.settings python -c "from openrave_org.docs import models; models.DocumentRelease.objects.create(lang='$DOC_LANG',version='$OPENRAVE_VERSION', scm=models.DocumentRelease.GIT, scm_url='https://github.com/rdiankov/openrave/tree/v$OPENRAVE_VERSION', is_default=False);"
 
 Debugging Notes
 ===============
