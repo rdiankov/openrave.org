@@ -147,3 +147,5 @@ Debian 7.0 introduces preliminary support for systemd, an init system with advan
 While it is designed as a drop-in sysvinit replacement and as such makes use of existing SysV init scripts, the systemd package can be installed safely alongside sysvinit and started via the init=/bin/systemd kernel option. To utilize the features provided by systemd, about 50 packages already provide native support, among them core packages like udev, dbus and rsyslog.
 systemd is shipped as a technology preview in Debian 7.0. For more information on this topic, see the Debian wiki. 
 
+/boot/grub/grub.cfg:
+add boot option with  init=/bin/systemd
