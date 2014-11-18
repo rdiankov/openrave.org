@@ -3,7 +3,7 @@
 # installs uwsgi package
 # and sets the config file
 #
-class uwsgi ($owner='www-data',$group='www-data',$inidir='.',$inicontent) {
+class uwsgi ($owner='www-data',$group='www-data',$inidir,$inicontent) {
   include uwsgi::service
   uwsgi::install{'install-uwsgi':
     owner => $owner,
@@ -49,7 +49,7 @@ define uwsgi::install($owner,$group,$inidir,$inicontent) {
   }
   concat::fragment {'02_rc.local_custom':
     target => '/etc/rc.local',
-    content => "/usr/local/bin/uwsgi --emperor $inidir --uid ${localuser} --gid ${localgroup}\n",
+    content => "/usr/local/bin/uwsgi --emperor $inidir --uid ${localuser} --gid ${localgroup} --env FACTER_openraveorg_deploydir=${openraveorg_deploydir}\n",
     order  => '02',
   }
   concat::fragment {'99_rc.local_footer':
