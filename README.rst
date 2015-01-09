@@ -79,7 +79,7 @@ Then register the document version via
     export DOC_LANG=en
     DJANGO_SETTINGS_MODULE=openrave_org.settings python -c "from openrave_org.docs import models; models.DocumentRelease.objects.create(lang='$DOC_LANG',version='$OPENRAVE_VERSION', scm=models.DocumentRelease.GIT, scm_url='https://github.com/rdiankov/openrave/tree/v$OPENRAVE_VERSION', is_default=False);"
 
-  Then can updating docs using::
+  Then can update docs using::
    
    ./manage.py update_docs
 
