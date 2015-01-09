@@ -13,5 +13,6 @@ class debiansetup{
 	"cmake"             : ensure => installed;
 	"vim"               : ensure => installed;
 	"libpq-dev"         : ensure => installed;
+	"gettext"	    : ensure => installed;
     }
 }
