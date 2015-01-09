@@ -66,7 +66,8 @@ Setup documentation
 
 3. Load documents. Make sure to add openrave documentation html and json zip files (generated via http://openrave.org/docs/latest_stable/devel/documentation_system/) to::
 
-  cp openravehtml-latest_stable.zip $FACTER_openraveorg_deploydir/docdata/
+  cp openravehtml-latest_stable.zip $FACTER_openraveorg_deploydir/docdata/ 
+  
   cp openravejson-latest_stable.zip $FACTER_openraveorg_deploydir/docdata/
   
 Then register the document version via
